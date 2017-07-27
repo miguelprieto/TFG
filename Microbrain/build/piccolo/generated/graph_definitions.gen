@@ -1,0 +1,37 @@
+/* graph_definitions.gen - Generato automaticamente, non modificare! */
+namespace Graph {
+extern GraphNodeWithSymmetric __attribute__((far)) MODULE_1_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) MODULE_3_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) MODULE_5_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) MODULE_2_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) CAP_2_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) MODULE_4_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) __DISP_1_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) DISP_1_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) CAP_5_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) CAP_3_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) BASE_1_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) BASE_2_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) CAP_1_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) PUSH_BASE_1_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) PUSH_BASE_2_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) PUSH_BASE_3_B;
+extern GraphNodeWithSymmetric __attribute__((far)) BASE_3_B;
+extern GraphNodeWithSymmetric __attribute__((far)) MODULE_1_B;
+extern GraphNodeWithSymmetric __attribute__((far)) MODULE_2_B;
+extern GraphNodeWithSymmetric __attribute__((far)) CAP_2_B;
+extern GraphNodeWithSymmetric __attribute__((far)) MODULE_5_B;
+extern GraphNodeWithSymmetric __attribute__((far)) MODULE_4_B;
+extern GraphNodeWithSymmetric __attribute__((far)) __DISP_1_B;
+extern GraphNodeWithSymmetric __attribute__((far)) DISP_1_B;
+extern GraphNodeWithSymmetric __attribute__((far)) MODULE_3_B;
+extern GraphNodeWithSymmetric __attribute__((far)) CAP_5_B;
+extern GraphNodeWithSymmetric __attribute__((far)) CAP_3_B;
+extern GraphNodeWithSymmetric __attribute__((far)) BASE_1_B;
+extern GraphNodeWithSymmetric __attribute__((far)) BASE_2_B;
+extern GraphNodeWithSymmetric __attribute__((far)) CAP_1_B;
+extern GraphNodeWithSymmetric __attribute__((far)) PUSH_BASE_1_B;
+extern GraphNodeWithSymmetric __attribute__((far)) PUSH_BASE_2_B;
+extern GraphNodeWithSymmetric __attribute__((far)) BASE_3_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) PUSH_BASE_3_Y;
+}

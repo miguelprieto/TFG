@@ -1,0 +1,8 @@
+build/grande/Microbrain/i2c.o: ../Microbrain/i2c.cpp grande/defines.h \
+ shared_defines.h ../libs/c++support/libpic30++.h
+
+grande/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:

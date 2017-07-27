@@ -1,0 +1,203 @@
+<graph>
+    <nodes>
+        <node x="1000" y="600" id="0" label="MODULE_1_Y"/>
+        <node x="500" y="1100" id="1" label="MODULE_3_Y"/>
+        <node x="800" y="1850" id="2" label="MODULE_5_Y"/>
+        <node x="200" y="600" id="3" label="MODULE_2_Y"/>
+        <node x="300" y="810" id="4" label="CAP_2_Y"/>
+        <node x="900" y="1400" id="5" label="MODULE_4_Y"/>
+        <node x="1150" y="160" id="6" label="__DISP_1_Y"/>
+        <node x="1150" y="320" id="7" label="DISP_1_1_Y"/>
+        <node x="650" y="1630" id="8" label="CAP_5_Y"/>
+        <node x="900" y="900" id="9"/>
+        <node x="1100" y="900" id="10"/>
+        <node x="718" y="1220" id="11"/>
+        <node x="434" y="1378" id="12"/>
+        <node x="671" y="964" id="13"/>
+        <node x="240" y="1140" id="14"/>
+        <node x="226" y="1323" id="15"/>
+        <node x="240" y="970" id="16"/>
+        <node x="500" y="880" id="17" label="CAP_3_Y"/>
+        <node x="1300" y="821" id="18"/>
+        <node x="1493" y="594" id="19"/>
+        <node x="463" y="750" id="20"/>
+        <node x="240" y="775" id="21" label="BASE_1_Y"/>
+        <node x="682" y="833" id="22"/>
+        <node x="1500" y="300" id="23"/>
+        <node x="1190" y="1385" id="24" label="BASE_2_Y"/>
+        <node x="1208" y="1000" id="25"/>
+        <node x="1000" y="1120" id="26"/>
+        <node x="1000" y="340" id="27" label="CAP_1_Y"/>
+        <node x="220" y="775" id="28" label="PUSH_BASE_1_Y"/>
+        <node x="1154" y="1421" id="29" label="PUSH_BASE_2_Y"/>
+        <node x="1315" y="1300" id="30" label="PUSH_BASE_3_B"/>
+        <node x="1300" y="1300" id="31" label="BASE_3_B"/>
+        <node x="855" y="790" id="32"/>
+        <node x="1150" y="445" id="33" label="DISP_1_Y"/>
+        <node x="1488" y="858" id="34"/>
+        <node x="2000" y="600" id="35" mirrorOf="0" label="MODULE_1_B"/>
+        <node x="2800" y="600" id="36" mirrorOf="3" label="MODULE_2_B"/>
+        <node x="2700" y="810" id="37" mirrorOf="4" label="CAP_2_B"/>
+        <node x="2200" y="1850" id="38" mirrorOf="2" label="MODULE_5_B"/>
+        <node x="2100" y="1400" id="39" mirrorOf="5" label="MODULE_4_B"/>
+        <node x="1850" y="160" id="40" mirrorOf="6" label="__DISP_1_B"/>
+        <node x="1850" y="320" id="41" mirrorOf="7" label="DISP_1_1_B"/>
+        <node x="2500" y="1100" id="42" mirrorOf="1" label="MODULE_3_B"/>
+        <node x="2350" y="1630" id="43" mirrorOf="8" label="CAP_5_B"/>
+        <node x="2100" y="900" id="44" mirrorOf="9"/>
+        <node x="1900" y="900" id="45" mirrorOf="10"/>
+        <node x="2282" y="1220" id="46" mirrorOf="11"/>
+        <node x="2566" y="1378" id="47" mirrorOf="12" label="CAP_3_B"/>
+        <node x="2329" y="964" id="48" mirrorOf="13"/>
+        <node x="2774" y="1323" id="49" mirrorOf="15"/>
+        <node x="2760" y="1140" id="50" mirrorOf="14"/>
+        <node x="2760" y="970" id="51" mirrorOf="16"/>
+        <node x="2500" y="880" id="52" mirrorOf="17"/>
+        <node x="1700" y="821" id="53" mirrorOf="18"/>
+        <node x="2537" y="750" id="54" mirrorOf="20"/>
+        <node x="2760" y="775" id="55" mirrorOf="21" label="BASE_1_B"/>
+        <node x="2318" y="833" id="56" mirrorOf="22"/>
+        <node x="1810" y="1385" id="57" mirrorOf="24" label="BASE_2_B"/>
+        <node x="1792" y="1000" id="58" mirrorOf="25"/>
+        <node x="2000" y="1120" id="59" mirrorOf="26"/>
+        <node x="2000" y="340" id="60" mirrorOf="27" label="CAP_1_B"/>
+        <node x="2780" y="775" id="61" mirrorOf="28" label="PUSH_BASE_1_B"/>
+        <node x="1846" y="1421" id="62" mirrorOf="29" label="PUSH_BASE_2_B"/>
+        <node x="1700" y="1300" id="63" mirrorOf="31" label="BASE_3_Y"/>
+        <node x="1685" y="1300" id="64" mirrorOf="30" label="PUSH_BASE_3_Y"/>
+        <node x="2145" y="790" id="65" mirrorOf="32"/>
+        <node x="1850" y="445" id="66" mirrorOf="33" label="DISP_1_B"/>
+    </nodes>
+    <edges>
+        <edge a="0" b="10"/>
+        <edge a="10" b="9"/>
+        <edge a="11" b="9"/>
+        <edge a="10" b="11"/>
+        <edge a="11" b="8"/>
+        <edge a="11" b="12"/>
+        <edge a="12" b="8"/>
+        <edge a="9" b="13"/>
+        <edge a="13" b="11"/>
+        <edge a="15" b="8"/>
+        <edge a="12" b="15"/>
+        <edge a="15" b="14"/>
+        <edge a="14" b="12"/>
+        <edge a="14" b="16"/>
+        <edge a="16" b="4"/>
+        <edge a="13" b="17"/>
+        <edge a="17" b="4"/>
+        <edge a="17" b="16"/>
+        <edge a="17" b="14"/>
+        <edge a="45" b="35"/>
+        <edge a="44" b="45"/>
+        <edge a="45" b="46"/>
+        <edge a="46" b="44"/>
+        <edge a="48" b="44"/>
+        <edge a="48" b="46"/>
+        <edge a="46" b="43"/>
+        <edge a="43" b="47"/>
+        <edge a="47" b="46"/>
+        <edge a="47" b="49"/>
+        <edge a="49" b="43"/>
+        <edge a="49" b="50"/>
+        <edge a="50" b="47"/>
+        <edge a="50" b="51"/>
+        <edge a="51" b="37"/>
+        <edge a="37" b="52"/>
+        <edge a="52" b="51"/>
+        <edge a="52" b="48"/>
+        <edge a="52" b="50"/>
+        <edge a="18" b="0"/>
+        <edge a="18" b="10"/>
+        <edge a="18" b="11"/>
+        <edge a="19" b="18"/>
+        <edge a="53" b="19"/>
+        <edge a="19" b="0"/>
+        <edge a="53" b="45"/>
+        <edge a="53" b="46"/>
+        <edge a="53" b="35"/>
+        <edge a="35" b="19"/>
+        <edge a="19" b="10"/>
+        <edge a="19" b="45"/>
+        <edge a="20" b="13"/>
+        <edge a="20" b="4"/>
+        <edge a="17" b="20"/>
+        <edge a="37" b="54"/>
+        <edge a="54" b="52"/>
+        <edge a="48" b="54"/>
+        <edge a="1" b="17"/>
+        <edge a="20" b="21"/>
+        <edge a="21" b="4"/>
+        <edge a="21" b="16"/>
+        <edge a="54" b="55"/>
+        <edge a="55" b="37"/>
+        <edge a="55" b="51"/>
+        <edge a="22" b="20"/>
+        <edge a="13" b="22"/>
+        <edge a="22" b="9"/>
+        <edge a="54" b="56"/>
+        <edge a="56" b="48"/>
+        <edge a="44" b="56"/>
+        <edge a="23" b="7"/>
+        <edge a="23" b="41"/>
+        <edge a="7" b="19"/>
+        <edge a="19" b="23"/>
+        <edge a="23" b="0"/>
+        <edge a="23" b="35"/>
+        <edge a="35" b="41"/>
+        <edge a="41" b="19"/>
+        <edge a="58" b="59"/>
+        <edge a="46" b="59"/>
+        <edge a="25" b="26"/>
+        <edge a="26" b="11"/>
+        <edge a="26" b="10"/>
+        <edge a="10" b="25"/>
+        <edge a="25" b="18"/>
+        <edge a="58" b="53"/>
+        <edge a="58" b="45"/>
+        <edge a="45" b="59"/>
+        <edge a="57" b="58"/>
+        <edge a="57" b="59"/>
+        <edge a="26" b="24"/>
+        <edge a="24" b="25"/>
+        <edge a="27" b="0"/>
+        <edge a="27" b="7"/>
+        <edge a="60" b="35"/>
+        <edge a="41" b="60"/>
+        <edge a="52" b="42"/>
+        <edge a="17" b="22"/>
+        <edge a="63" b="58"/>
+        <edge a="25" b="31"/>
+        <edge a="10" b="24"/>
+        <edge a="26" b="9"/>
+        <edge a="57" b="45"/>
+        <edge a="44" b="59"/>
+        <edge a="56" b="52"/>
+        <edge a="9" b="0"/>
+        <edge a="35" b="44"/>
+        <edge a="22" b="32"/>
+        <edge a="32" b="0"/>
+        <edge a="32" b="10"/>
+        <edge a="32" b="9"/>
+        <edge a="65" b="35"/>
+        <edge a="56" b="65"/>
+        <edge a="65" b="44"/>
+        <edge a="45" b="65"/>
+        <edge a="0" b="33"/>
+        <edge a="33" b="7"/>
+        <edge a="41" b="66"/>
+        <edge a="66" b="35"/>
+        <edge a="33" b="10"/>
+        <edge a="33" b="19"/>
+        <edge a="66" b="19"/>
+        <edge a="53" b="66"/>
+        <edge a="60" b="66"/>
+        <edge a="33" b="27"/>
+        <edge a="7" b="0"/>
+        <edge a="66" b="45"/>
+        <edge a="25" b="34"/>
+        <edge a="34" b="53"/>
+        <edge a="58" b="34"/>
+        <edge a="34" b="18"/>
+    </edges>
+</graph>

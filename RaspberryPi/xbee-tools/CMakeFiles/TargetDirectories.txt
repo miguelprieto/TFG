@@ -1,0 +1,4 @@
+/home/miguelprieto/eurobot/firmware/2017/RaspberryPi/xbee-tools/CMakeFiles/hexinfo.dir
+/home/miguelprieto/eurobot/firmware/2017/RaspberryPi/xbee-tools/CMakeFiles/rtspcmd.dir
+/home/miguelprieto/eurobot/firmware/2017/RaspberryPi/xbee-tools/CMakeFiles/xbeedump.dir
+/home/miguelprieto/eurobot/firmware/2017/RaspberryPi/xbee-tools/CMakeFiles/xbeemux.dir

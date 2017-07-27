@@ -1,0 +1,47 @@
+build/grande/Microbrain/bus_interface.o: ../Microbrain/bus_interface.cpp \
+ grande/defines.h shared_defines.h ../libs/c++support/libpic30++.h \
+ ../Microbrain/adc.h grande/gpio.h ../Microbrain/bus_interface.h \
+ ../bus_objects.h ../Microbrain/geometry.h \
+ ../libs/can_stdio_and_rtsp/canstdio_endpoint.h \
+ ../libs/ecan_lib/ecan_lib.h grande/goals.h goal_manager.h \
+ grande/servos.h color.h routing.h geometry.h \
+ build/grande/generated/graph_definitions.gen ../Microbrain/routing.h \
+ ../Microbrain/wait.h
+
+grande/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+../Microbrain/adc.h:
+
+grande/gpio.h:
+
+../Microbrain/bus_interface.h:
+
+../bus_objects.h:
+
+../Microbrain/geometry.h:
+
+../libs/can_stdio_and_rtsp/canstdio_endpoint.h:
+
+../libs/ecan_lib/ecan_lib.h:
+
+grande/goals.h:
+
+goal_manager.h:
+
+grande/servos.h:
+
+color.h:
+
+routing.h:
+
+geometry.h:
+
+build/grande/generated/graph_definitions.gen:
+
+../Microbrain/routing.h:
+
+../Microbrain/wait.h:

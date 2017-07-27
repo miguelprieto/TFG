@@ -1,0 +1,701 @@
+/*
+ * piccolo_automation.cpp
+ */
+
+#include "defines.h"
+#include <stdio.h>
+#include <libpic30++.h>
+#include "fsm.h"
+#include "servo.h"
+#include "automation.h"
+#include "bus_interface.h"
+#include "ecan_lib.h"
+
+#define SENSOR_FRONT_ON()         (PORTBbits.RB2 == 0)
+#define SET_SENSOR_FRONT_DIR()   { TRISBbits.TRISB2 = 1; }
+
+#define SENSOR_BACK_ON()         (PORTAbits.RA4 == 0)
+#define SET_SENSOR_BACK_DIR()   { TRISAbits.TRISA4 = 1; }
+
+#define O_1(x)                   {LATAbits.LATA2 = x;}
+#define O_2(x)                   {LATAbits.LATA3 = x;}
+#define O_3(x)                   {LATBbits.LATB3 = x;}
+
+#define SET_GPIO() { \
+    TRISAbits.TRISA2 = 0;\
+    TRISBbits.TRISB3 = 0;\
+    TRISAbits.TRISA3 = 0;\
+    }
+
+
+
+// ------------------------------------------------------------------
+
+int set_ax12_servo_position(int servo_num, int servo_value)
+{
+    t_servo_position pos;
+    __delay_ms(100);
+    pos.servo_num = servo_num;
+    pos.position = servo_value;
+    return ecan_send(AX12_SERVO_POSITION_CAN_ID, (unsigned char *)&pos, 8, 0);
+}
+
+// ------------------------------------------------------------------
+
+typedef enum {
+    ROTATE_CW = 0,
+    ROTATE_CCW
+} t_rot_dir;
+
+
+class ModuleCaptureFSM : public FiniteStateMachine<ModuleCaptureFSM>
+{
+public:
+    ModuleCaptureFSM(int _elbow_id, int _wirst_id,
+                     int _wirst_vertical, int _wirst_cw, int _wirst_ccw,
+                     int _elbow_down, int _elbow_rot, int _elbow_mid, int _elbow_up, int _elbow_semi_up,
+                     int _elbow_release, int _elbow_reset)
+        : m_elbow_id(_elbow_id), m_wirst_id(_wirst_id),
+          p_wirst_vertical(_wirst_vertical), p_wirst_cw(_wirst_cw), p_wirst_ccw(_wirst_ccw),
+          p_elbow_down(_elbow_down), p_elbow_rot(_elbow_rot), p_elbow_mid(_elbow_mid),
+          p_elbow_up(_elbow_up), p_elbow_semi_up(_elbow_semi_up),
+          p_elbow_release(_elbow_release), p_elbow_reset(_elbow_reset),
+          capture_up(false)
+    {
+        setNextState(&ModuleCaptureFSM::nopState);
+    };
+
+    // API
+    void do_capture(bool up) { capture_up = up; setNextState(&ModuleCaptureFSM::prepare); };
+    void do_prepare_dispenser() { setNextState(&ModuleCaptureFSM::prepare_dispenser); };
+    void do_save(bool up) { capture_up = up; setNextState(&ModuleCaptureFSM::after_capture); };
+    void do_reset_all() { setNextState(&ModuleCaptureFSM::reset_1); };
+    void do_reset_automation() { setNextState(&ModuleCaptureFSM::reset_automation); };
+    void do_release() { setNextState(&ModuleCaptureFSM::start_release); };
+    void do_change_arm() { setNextState(&ModuleCaptureFSM::change_arm); };
+    void off() {
+        stop_pump();
+        set_servo(0, 0);
+        set_servo(1, 0);
+        set_servo(6, 0);
+        set_servo(7, 0);
+        set_ax12_servo_position(m_elbow_id, -1);
+        set_ax12_servo_position(m_wirst_id, -1);
+        setNextState(&ModuleCaptureFSM::nopState);
+    };
+    //bool isBusy() { return getCurrentState() != &LoadPalleFSM::nopState; };
+
+    virtual void close_grip() = 0;
+    virtual void open_grip_1() = 0;
+    virtual void open_grip_2() = 0;
+    virtual void open_large_grip_1() = 0;
+    virtual void open_large_grip_2() = 0;
+    virtual void reset_grip() = 0;
+    virtual void reset_grip_1() = 0;
+    virtual void reset_grip_2() = 0;
+
+    // -------------------- WIRST
+    void wirst_prepare()
+    {
+        set_ax12_servo_position(m_wirst_id, p_wirst_vertical);
+    };
+
+    void wirst_rotate(t_rot_dir dir)
+    {
+        if (dir == ROTATE_CW)
+            set_ax12_servo_position(m_wirst_id, p_wirst_cw);
+        else
+            set_ax12_servo_position(m_wirst_id, p_wirst_ccw);
+    };
+
+    virtual void elbow_down()
+    {
+        set_ax12_servo_position(m_elbow_id, p_elbow_down);
+    };
+
+    virtual void elbow_for_rotate()
+    {
+        set_ax12_servo_position(m_elbow_id, p_elbow_rot);
+    };
+
+    virtual void elbow_mid()
+    {
+        set_ax12_servo_position(m_elbow_id, p_elbow_mid);
+    };
+
+    virtual void elbow_up()
+    {
+        set_ax12_servo_position(m_elbow_id, p_elbow_up);
+    };
+
+    virtual void elbow_semi_up()
+    {
+        set_ax12_servo_position(m_elbow_id, p_elbow_semi_up);
+    };
+
+    virtual void elbow_release()
+    {
+        set_ax12_servo_position(m_elbow_id, p_elbow_release);
+    };
+
+    virtual void elbow_reset()
+    {
+        set_ax12_servo_position(m_elbow_id, p_elbow_reset);
+    };
+
+    virtual void start_pump() = 0;
+    virtual void stop_pump() = 0;
+
+    virtual bool check_module() = 0;
+
+    int get_status() {
+        StateHandler s = getCurrentState();
+        if (s == &ModuleCaptureFSM::nopState) return AUTOMATION_STATUS_NONE;
+        if (s == &ModuleCaptureFSM::wait_module)  return AUTOMATION_STATUS_WAITING;
+        return AUTOMATION_STATUS_WORKING;
+    };
+
+protected:
+    int m_elbow_id, m_wirst_id;
+    int p_wirst_vertical, p_wirst_cw, p_wirst_ccw;
+    int p_elbow_down, p_elbow_rot, p_elbow_mid, p_elbow_up, p_elbow_semi_up;
+    int p_elbow_release, p_elbow_reset;
+    bool capture_up;
+
+    // Stati
+    void prepare_dispenser();
+    void prepare_dispenser_2();
+    void prepare_dispenser_3();
+    void prepare_dispenser_4();
+
+    void prepare();
+    void prepare_2();
+    void prepare_3();
+
+    void start_capture();
+    void wait_module();
+    void after_capture();
+    void after_capture_2();
+    void after_capture_3();
+    void after_capture_4();
+    void after_capture_5();
+    void after_capture_6();
+
+    void reset_1();
+    void reset_2();
+    void reset_3();
+    void reset_4();
+
+    void reset_automation();
+
+    void start_release();
+    void start_release_2();
+    void release_2();
+    void release_3();
+
+    void change_arm();
+};
+
+#define FRONT_WIRST        35
+#define FRONT_ELBOW        36
+
+#define F_WIRST_VERTICAL   520
+#define F_WIRST_CW         220
+#define F_WIRST_CCW        820
+
+#define F_ELBOW_DOWN       820
+#define F_ELBOW_ROT        650
+#define F_ELBOW_MID        512
+#define F_ELBOW_SEMI_UP    400
+#define F_ELBOW_UP         360
+#define F_ELBOW_RELEASE    770
+#define F_ELBOW_RESET      230
+
+// ---------------------------------------------------------------
+
+#define REAR_WIRST        49
+#define REAR_ELBOW        48
+
+#define R_WIRST_VERTICAL   520
+#define R_WIRST_CW         200
+#define R_WIRST_CCW        820
+
+#define R_ELBOW_DOWN       875
+#define R_ELBOW_ROT        700
+#define R_ELBOW_MID        560
+#define R_ELBOW_SEMI_UP    450
+#define R_ELBOW_UP         410
+#define R_ELBOW_RELEASE    840
+#define R_ELBOW_RESET      290
+
+class ModuleCaptureFSMFront : public ModuleCaptureFSM {
+public:
+    ModuleCaptureFSMFront() :
+        ModuleCaptureFSM(FRONT_ELBOW, FRONT_WIRST,
+                         F_WIRST_VERTICAL, F_WIRST_CW, F_WIRST_CCW,
+                         F_ELBOW_DOWN, F_ELBOW_ROT, F_ELBOW_MID, F_ELBOW_UP, F_ELBOW_SEMI_UP,
+                         F_ELBOW_RELEASE, F_ELBOW_RESET)
+    {
+    };
+
+    virtual void close_grip()
+    {
+        set_servo(0, 790);
+        set_servo(1, 920);
+    };
+
+    // -------------------------------------------
+
+    virtual void open_grip_2()
+    {
+		set_servo(1, 1050);
+    };
+
+    virtual void open_grip_1()
+    {
+        set_servo(0, 600);
+    };
+
+    // -------------------------------------------
+
+    virtual void open_large_grip_1()
+    {
+        set_servo(0, 400);
+    };
+
+    virtual void open_large_grip_2()
+    {
+        set_servo(1, 1300);
+    };
+
+    virtual void reset_grip()
+    {
+        reset_grip_1();
+        reset_grip_2();
+    };
+
+    virtual void reset_grip_1()
+    {
+        set_servo(1, 430);
+    };
+
+    virtual void reset_grip_2()
+    {
+        set_servo(0, 1250);
+    };
+
+    virtual void start_pump() { O_2(1); };
+    virtual void stop_pump() { O_2(0); };
+
+    virtual bool check_module() { return SENSOR_FRONT_ON(); };
+};
+
+
+class ModuleCaptureFSMRear : public ModuleCaptureFSM {
+public:
+    ModuleCaptureFSMRear() :
+        ModuleCaptureFSM(REAR_ELBOW, REAR_WIRST,
+                         R_WIRST_VERTICAL, R_WIRST_CW, R_WIRST_CCW,
+                         R_ELBOW_DOWN, R_ELBOW_ROT, R_ELBOW_MID, R_ELBOW_UP, R_ELBOW_SEMI_UP,
+                         R_ELBOW_RELEASE, R_ELBOW_RESET)
+    {
+    };
+
+    virtual void open_grip_2()
+    {
+        set_servo(6, 1150);
+    }
+
+    virtual void open_grip_1()
+    {
+        set_servo(7, 550);
+    };
+
+    virtual void close_grip()
+    {
+        set_servo(6, 1030);
+        set_servo(7, 680);
+    };
+
+    virtual void open_large_grip_2()
+    {
+        set_servo(6, 1340);
+    };
+
+    virtual void open_large_grip_1()
+    {
+        set_servo(7, 400);
+    };
+
+    virtual void reset_grip()
+    {
+        reset_grip_1();
+        reset_grip_2();
+    };
+
+    virtual void reset_grip_1()
+    {
+        set_servo(6, 490);
+    };
+
+    virtual void reset_grip_2()
+    {
+        set_servo(7, 1150);
+    };
+
+    virtual void start_pump() { O_1(1); };
+    virtual void stop_pump() { O_1(0); };
+
+    virtual bool check_module() { return SENSOR_BACK_ON(); };
+};
+
+
+static ModuleCaptureFSMRear capture_rear;
+static ModuleCaptureFSMFront capture_front;
+
+
+// --- Gestori degli stati ---
+
+// -------------------------------------------------
+// PREPARAZIONE CATTURA DISPENSER
+
+void ModuleCaptureFSM::prepare_dispenser()
+{
+    open_grip_1();
+    setNextState(&ModuleCaptureFSM::prepare_dispenser_2, 25); // 500 ms
+}
+
+
+void ModuleCaptureFSM::prepare_dispenser_2()
+{
+    open_grip_2();
+    elbow_mid();
+    setNextState(&ModuleCaptureFSM::prepare_dispenser_3, 25); // 500 ms
+}
+
+
+void ModuleCaptureFSM::prepare_dispenser_3()
+{
+    wirst_prepare();
+    setNextState(&ModuleCaptureFSM::prepare_dispenser_4, 25); // 500 ms
+}
+
+void ModuleCaptureFSM::prepare_dispenser_4()
+{
+    elbow_down();
+    start_pump();
+    open_large_grip_1();
+    open_large_grip_2();
+    setNextState(&ModuleCaptureFSM::nopState);
+}
+// -------------------------------------------------
+
+
+// -------------------------------------------------
+// PREPARAZIONE CATTURA
+
+void ModuleCaptureFSM::prepare()
+{
+    open_grip_1();
+    setNextState(&ModuleCaptureFSM::prepare_2, 25); // 500 ms
+}
+
+
+void ModuleCaptureFSM::prepare_2()
+{
+    open_grip_2();
+    elbow_mid();
+    setNextState(&ModuleCaptureFSM::prepare_3, 25); // 500 ms
+}
+
+void ModuleCaptureFSM::prepare_3()
+{
+    wirst_prepare();
+    setNextState(&ModuleCaptureFSM::start_capture, 25);
+}
+// -------------------------------------------------
+
+
+// -------------------------------------------------
+// CATTURA
+void ModuleCaptureFSM::start_capture()
+{
+    elbow_down();
+    start_pump();
+    setNextState(&ModuleCaptureFSM::wait_module, 25);
+}
+
+
+void ModuleCaptureFSM::wait_module()
+{
+    if (check_module()) {
+        close_grip();
+        setNextState(&ModuleCaptureFSM::after_capture, 150); // 3000 ms
+    }
+}
+
+void ModuleCaptureFSM::after_capture()
+{
+    open_grip_1();
+    open_grip_2();
+    elbow_for_rotate();
+    setNextState(&ModuleCaptureFSM::after_capture_2, 25); // 500 ms
+}
+
+void ModuleCaptureFSM::after_capture_2()
+{
+    wirst_rotate(ROTATE_CW);
+    setNextState(&ModuleCaptureFSM::after_capture_3, 25); // 500 ms
+}
+
+void ModuleCaptureFSM::after_capture_3()
+{
+    elbow_mid();
+    setNextState(&ModuleCaptureFSM::after_capture_4, 25); // 500 ms
+}
+
+void ModuleCaptureFSM::after_capture_4()
+{
+    if (capture_up) {
+        elbow_semi_up();
+    }
+    setNextState(&ModuleCaptureFSM::after_capture_5, 25); // 500 ms
+}
+
+void ModuleCaptureFSM::after_capture_5()
+{
+    if (capture_up) {
+        elbow_up();
+    }
+    reset_grip_1();
+    setNextState(&ModuleCaptureFSM::after_capture_6, 25); // 500 ms
+}
+
+void ModuleCaptureFSM::after_capture_6()
+{
+    if (capture_up) {
+        stop_pump();
+    }
+    reset_grip_2();
+    setNextState(&ModuleCaptureFSM::nopState);
+}
+
+// -------------------------------------------------
+
+
+// -------------------------------------------------
+// RESET
+void ModuleCaptureFSM::reset_1()
+{
+    elbow_reset();
+    setNextState(&ModuleCaptureFSM::reset_2);
+}
+
+void ModuleCaptureFSM::reset_2()
+{
+    wirst_rotate(ROTATE_CW);
+    setNextState(&ModuleCaptureFSM::reset_3, 25); // 500 ms
+}
+
+void ModuleCaptureFSM::reset_3()
+{
+    reset_grip_1();
+    setNextState(&ModuleCaptureFSM::reset_4, 28); // 560 ms
+}
+
+
+void ModuleCaptureFSM::reset_4()
+{
+    reset_grip_2();
+    setNextState(&ModuleCaptureFSM::nopState);
+}
+
+
+// -------------------------------------------------
+// RESET AUTOMATION
+void ModuleCaptureFSM::reset_automation()
+{
+    elbow_mid();
+    setNextState(&ModuleCaptureFSM::reset_2, 25);
+}
+
+
+// -------------------------------------------------
+// RELEASE
+void ModuleCaptureFSM::start_release()
+{
+    open_large_grip_1();
+    setNextState(&ModuleCaptureFSM::start_release_2, 25);
+}
+
+void ModuleCaptureFSM::start_release_2()
+{
+    open_large_grip_2();
+    elbow_release();
+    setNextState(&ModuleCaptureFSM::release_2, 70);
+}
+
+void ModuleCaptureFSM::release_2()
+{
+    stop_pump();
+    setNextState(&ModuleCaptureFSM::release_3, 25);
+}
+
+void ModuleCaptureFSM::release_3()
+{
+    elbow_mid();
+    setNextState(&ModuleCaptureFSM::nopState);
+}
+
+
+// -------------------------------------------------
+// CHANGE_ARM
+void ModuleCaptureFSM::change_arm()
+{
+    start_pump();
+    elbow_up();
+    setNextState(&ModuleCaptureFSM::nopState);
+}
+
+void init_automation(void)
+{
+    SET_SENSOR_FRONT_DIR();
+    SET_SENSOR_BACK_DIR();
+    SET_GPIO();
+    O_1(0);
+    O_2(0);
+    O_3(0);
+
+    capture_front.start();
+    capture_rear.start();
+}
+
+void automation(void)
+{
+    capture_front.schedule();
+    capture_rear.schedule();
+
+    // Invia aggiornamenti via CAN ogni 2*20ms = 40ms
+    static int ctr = 0;
+    if (ctr++ == 2) {
+        t_servo_status_piccolo p;
+        ctr = 0;
+
+        p.front_status = capture_front.get_status();
+        p.rear_status = capture_rear.get_status();
+        p.front_sensor = SENSOR_FRONT_ON();
+        p.rear_sensor = SENSOR_BACK_ON();
+
+        ecan_send(SERVO_STATUS_PICCOLO_CAN_ID, (unsigned char *)&p, 8, 0);
+    }
+}
+
+// API
+
+void automation_command(const t_servo_position * pos)
+{
+    switch (pos->position) {
+
+    case SERVO_AUTOMATION_OFF:
+        capture_rear.off();
+        capture_front.off();
+        break;
+
+    case SERVO_AUTOMATION_RESET:
+        capture_front.do_reset_all();
+        capture_rear.do_reset_all();
+        break;
+
+    case SERVO_AUTOMATION_RESET_FRONT:
+        capture_front.do_reset_all();
+        break;
+
+    case SERVO_AUTOMATION_RESET_REAR:
+        capture_rear.do_reset_all();
+        break;
+
+    case SERVO_AUTOMATION_RESET_AUTOMATION_FRONT:
+        capture_front.do_reset_automation();
+        break;
+
+    case SERVO_AUTOMATION_RESET_AUTOMATION_REAR:
+        capture_rear.do_reset_automation();
+        break;
+
+    case SERVO_AUTOMATION_FRONT_CAPTURE_UP:
+        capture_front.do_capture(true);
+        break;
+
+    case SERVO_AUTOMATION_FRONT_CAPTURE_MID:
+        capture_front.do_capture(false);
+        break;
+
+    case SERVO_AUTOMATION_FRONT_PREPARE_DISPENSER:
+        capture_front.do_prepare_dispenser();
+        break;
+
+    case SERVO_AUTOMATION_FRONT_SAVE:
+        capture_front.do_save(true);
+        break;
+
+    case SERVO_AUTOMATION_FRONT_SAVE_MID:
+        capture_front.do_save(false);
+        break;
+
+    case SERVO_AUTOMATION_FRONT_RELEASE:
+        capture_front.do_release();
+        break;
+
+    case SERVO_AUTOMATION_FRONT_CHANGE:
+        capture_front.do_change_arm();
+        break;
+
+    case SERVO_AUTOMATION_REAR_CAPTURE_UP:
+        capture_rear.do_capture(true);
+        break;
+
+    case SERVO_AUTOMATION_REAR_CAPTURE_MID:
+        capture_rear.do_capture(false);
+        break;
+
+    case SERVO_AUTOMATION_REAR_PREPARE_DISPENSER:
+        capture_rear.do_prepare_dispenser();
+        break;
+
+    case SERVO_AUTOMATION_REAR_SAVE:
+        capture_rear.do_save(true);
+        break;
+
+    case SERVO_AUTOMATION_REAR_SAVE_MID:
+        capture_rear.do_save(false);
+        break;
+
+    case SERVO_AUTOMATION_REAR_RELEASE:
+        capture_rear.do_release();
+        break;
+
+    case SERVO_AUTOMATION_REAR_CHANGE:
+        capture_rear.do_change_arm();
+        break;
+
+    case SERVO_AUTOMATION_FRONT_PUMP_ON:
+        O_2(1);
+        break;
+
+    case SERVO_AUTOMATION_FRONT_PUMP_OFF:
+        O_2(0);
+        break;
+
+    case SERVO_AUTOMATION_REAR_PUMP_ON:
+        O_1(1);
+        break;
+
+    case SERVO_AUTOMATION_REAR_PUMP_OFF:
+        O_1(0);
+        break;
+
+    default:
+        break;
+
+    }
+}

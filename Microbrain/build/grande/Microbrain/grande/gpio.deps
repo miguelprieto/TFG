@@ -1,0 +1,24 @@
+build/grande/Microbrain/grande/gpio.o: ../Microbrain/grande/gpio.cpp \
+ ../Microbrain/grande/defines.h shared_defines.h adc.h grande/gpio.h \
+ ../Microbrain/grande/gpio.h color.h routing.h grande/defines.h \
+ geometry.h build/grande/generated/graph_definitions.gen
+
+../Microbrain/grande/defines.h:
+
+shared_defines.h:
+
+adc.h:
+
+grande/gpio.h:
+
+../Microbrain/grande/gpio.h:
+
+color.h:
+
+routing.h:
+
+grande/defines.h:
+
+geometry.h:
+
+build/grande/generated/graph_definitions.gen:

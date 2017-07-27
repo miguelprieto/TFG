@@ -1,0 +1,6 @@
+build/piccolo/RCServoCAN/sensors.o: ../RCServoCAN/sensors.cpp \
+ ../RCServoCAN/defines.h ../RCServoCAN/sensors.h
+
+../RCServoCAN/defines.h:
+
+../RCServoCAN/sensors.h:

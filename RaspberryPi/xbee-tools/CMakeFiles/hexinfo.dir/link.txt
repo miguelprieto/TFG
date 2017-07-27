@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/hexinfo.dir/xbeertsp/hexinfo.cpp.o CMakeFiles/hexinfo.dir/xbeertsp/DeviceInfo.cpp.o CMakeFiles/hexinfo.dir/xbeertsp/HexImage.cpp.o CMakeFiles/hexinfo.dir/xbeertsp/Utils.cpp.o  -o hexinfo -rdynamic -llzo2 -lpthread 

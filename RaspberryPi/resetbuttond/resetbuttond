@@ -1,0 +1,41 @@
+#!/bin/sh
+
+if [ "$#" != "2" ];
+then
+	echo "Uso: $0 <led-gpio-num> <btn-gpio-num>" >&2
+	exit 1
+fi
+
+if [ "$UID" != "0" ];
+then
+	echo "Questo programma deve essere eseguito come root!" >&2
+	exit 1
+fi
+
+echo $1 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio$1/direction
+
+echo $2 > /sys/class/gpio/export
+echo in > /sys/class/gpio/gpio$2/direction
+
+trap "echo 0 > /sys/class/gpio/gpio$1/value; echo $1 > /sys/class/gpio/unexport; echo $2 > /sys/class/gpio/unexport" EXIT
+
+while [ "$(cat /sys/class/gpio/gpio$2/value)" == "0" ];
+do
+	sleep 1
+	echo $((1-$(cat /sys/class/gpio/gpio$1/value))) > /sys/class/gpio/gpio$1/value
+done
+
+echo 0 > /sys/class/gpio/gpio$1/value
+for i in $(seq 1 20);
+do
+	sleep .1
+	echo $((1-$(cat /sys/class/gpio/gpio$1/value))) > /sys/class/gpio/gpio$1/value
+done
+
+if [ "$(cat /sys/class/gpio/gpio$2/value)" == "0" ];
+then
+	reboot;
+else
+	poweroff;
+fi

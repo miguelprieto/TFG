@@ -1,0 +1,63 @@
+build/piccolo/Microbrain/main.o: ../Microbrain/main.cpp piccolo/defines.h \
+ shared_defines.h ../libs/c++support/libpic30++.h \
+ ../Microbrain/clocking.h ../Microbrain/color.h ../Microbrain/routing.h \
+ ../Microbrain/geometry.h build/piccolo/generated/graph_definitions.gen \
+ ../Microbrain/console.h ../Microbrain/led.h ../Microbrain/serial.h \
+ ../libs/ecan_lib/ecan_lib.h ../Microbrain/bus_interface.h \
+ ../bus_objects.h piccolo/goals.h goal_manager.h piccolo/servos.h \
+ ../Microbrain/goal_manager.h ../Microbrain/i2c.h ../Microbrain/srf08.h \
+ piccolo/gpio.h ../Microbrain/wait.h ../Microbrain/menu.h \
+ piccolo/servos.h ../Microbrain/simulator_interface.h \
+ ../libs/simple_var_output/simple_var_output.h
+
+piccolo/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+../Microbrain/clocking.h:
+
+../Microbrain/color.h:
+
+../Microbrain/routing.h:
+
+../Microbrain/geometry.h:
+
+build/piccolo/generated/graph_definitions.gen:
+
+../Microbrain/console.h:
+
+../Microbrain/led.h:
+
+../Microbrain/serial.h:
+
+../libs/ecan_lib/ecan_lib.h:
+
+../Microbrain/bus_interface.h:
+
+../bus_objects.h:
+
+piccolo/goals.h:
+
+goal_manager.h:
+
+piccolo/servos.h:
+
+../Microbrain/goal_manager.h:
+
+../Microbrain/i2c.h:
+
+../Microbrain/srf08.h:
+
+piccolo/gpio.h:
+
+../Microbrain/wait.h:
+
+../Microbrain/menu.h:
+
+piccolo/servos.h:
+
+../Microbrain/simulator_interface.h:
+
+../libs/simple_var_output/simple_var_output.h:

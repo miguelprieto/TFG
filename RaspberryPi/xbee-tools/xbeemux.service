@@ -1,0 +1,9 @@
+[Unit]
+Description=XBee multiplexer service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/xbeemux /dev/ttyAMA0
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,8 @@
+build/grande/Microbrain/clocking.o: ../Microbrain/clocking.cpp \
+ grande/defines.h shared_defines.h ../Microbrain/clocking.h
+
+grande/defines.h:
+
+shared_defines.h:
+
+../Microbrain/clocking.h:

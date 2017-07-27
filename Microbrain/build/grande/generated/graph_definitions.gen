@@ -1,0 +1,17 @@
+/* graph_definitions.gen - Generato automaticamente, non modificare! */
+namespace Graph {
+extern GraphNodeWithSymmetric __attribute__((far)) MOD_YB_2;
+extern GraphNodeWithSymmetric __attribute__((far)) MOD_YB_3;
+extern GraphNodeWithSymmetric __attribute__((far)) CRATERI_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) PRE_CRATERE_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) BASCULA_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) CRATERE1_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) RITORNO_Y;
+extern GraphNodeWithSymmetric __attribute__((far)) MOD_BY_2;
+extern GraphNodeWithSymmetric __attribute__((far)) MOD_BY_3;
+extern GraphNodeWithSymmetric __attribute__((far)) CRATERI_B;
+extern GraphNodeWithSymmetric __attribute__((far)) PRE_CRATERE_B;
+extern GraphNodeWithSymmetric __attribute__((far)) BASCULA_B;
+extern GraphNodeWithSymmetric __attribute__((far)) CRATERE1_B;
+extern GraphNodeWithSymmetric __attribute__((far)) RITORNO_B;
+}

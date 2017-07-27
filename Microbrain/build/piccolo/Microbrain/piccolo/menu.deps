@@ -1,0 +1,60 @@
+build/piccolo/Microbrain/piccolo/menu.o: ../Microbrain/piccolo/menu.cpp \
+ ../Microbrain/piccolo/defines.h shared_defines.h \
+ ../libs/c++support/libpic30++.h color.h routing.h piccolo/defines.h \
+ geometry.h build/piccolo/generated/graph_definitions.gen \
+ ../Microbrain/piccolo/controller_presets.h bus_interface.h \
+ ../bus_objects.h ../Microbrain/piccolo/goals.h goal_manager.h \
+ ../Microbrain/piccolo/servos.h ../Microbrain/piccolo/gpio.h menu.h \
+ console.h ../Microbrain/piccolo/../wait.h \
+ ../Microbrain/piccolo/../geometry.h piccolo/gpio.h routing.h \
+ ../libs/ecan_lib/ecan_lib.h wait.h adc.h console.h
+
+../Microbrain/piccolo/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+color.h:
+
+routing.h:
+
+piccolo/defines.h:
+
+geometry.h:
+
+build/piccolo/generated/graph_definitions.gen:
+
+../Microbrain/piccolo/controller_presets.h:
+
+bus_interface.h:
+
+../bus_objects.h:
+
+../Microbrain/piccolo/goals.h:
+
+goal_manager.h:
+
+../Microbrain/piccolo/servos.h:
+
+../Microbrain/piccolo/gpio.h:
+
+menu.h:
+
+console.h:
+
+../Microbrain/piccolo/../wait.h:
+
+../Microbrain/piccolo/../geometry.h:
+
+piccolo/gpio.h:
+
+routing.h:
+
+../libs/ecan_lib/ecan_lib.h:
+
+wait.h:
+
+adc.h:
+
+console.h:

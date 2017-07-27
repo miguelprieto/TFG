@@ -1,0 +1,360 @@
+/* graph_data.gen - Generato automaticamente, non modificare! */
+namespace Graph {
+namespace __unnamed_nodes {
+extern GraphNodeWithSymmetric __attribute__((far)) _n9;
+extern GraphNodeWithSymmetric __attribute__((far)) _n10;
+extern GraphNodeWithSymmetric __attribute__((far)) _n11;
+extern GraphNodeWithSymmetric __attribute__((far)) _n12;
+extern GraphNodeWithSymmetric __attribute__((far)) _n13;
+extern GraphNodeWithSymmetric __attribute__((far)) _n14;
+extern GraphNodeWithSymmetric __attribute__((far)) _n15;
+extern GraphNodeWithSymmetric __attribute__((far)) _n16;
+extern GraphNodeWithSymmetric __attribute__((far)) _n18;
+extern GraphNode __attribute__((far)) _n19;
+extern GraphNode __attribute__((far)) _n20;
+extern GraphNodeWithSymmetric __attribute__((far)) _n21;
+extern GraphNodeWithSymmetric __attribute__((far)) _n23;
+extern GraphNode __attribute__((far)) _n24;
+extern GraphNodeWithSymmetric __attribute__((far)) _n26;
+extern GraphNodeWithSymmetric __attribute__((far)) _n27;
+extern GraphNodeWithSymmetric __attribute__((far)) _n33;
+extern GraphNodeWithSymmetric __attribute__((far)) _n43;
+extern GraphNodeWithSymmetric __attribute__((far)) _n44;
+extern GraphNodeWithSymmetric __attribute__((far)) _n45;
+extern GraphNodeWithSymmetric __attribute__((far)) _n47;
+extern GraphNodeWithSymmetric __attribute__((far)) _n48;
+extern GraphNodeWithSymmetric __attribute__((far)) _n49;
+extern GraphNodeWithSymmetric __attribute__((far)) _n50;
+extern GraphNodeWithSymmetric __attribute__((far)) _n51;
+extern GraphNodeWithSymmetric __attribute__((far)) _n52;
+extern GraphNodeWithSymmetric __attribute__((far)) _n53;
+extern GraphNodeWithSymmetric __attribute__((far)) _n55;
+extern GraphNodeWithSymmetric __attribute__((far)) _n57;
+extern GraphNodeWithSymmetric __attribute__((far)) _n58;
+extern GraphNodeWithSymmetric __attribute__((far)) _n64;
+}
+}
+
+#define NODECOUNT 65
+static GraphNode *const allNodes[NODECOUNT] = { &Graph::MODULE_1_Y, &Graph::MODULE_3_Y, &Graph::MODULE_5_Y, &Graph::MODULE_2_Y, &Graph::CAP_2_Y, &Graph::MODULE_4_Y, &Graph::__DISP_1_Y, &Graph::DISP_1_Y, &Graph::CAP_5_Y, &Graph::__unnamed_nodes::_n9, &Graph::__unnamed_nodes::_n10, &Graph::__unnamed_nodes::_n11, &Graph::__unnamed_nodes::_n12, &Graph::__unnamed_nodes::_n13, &Graph::__unnamed_nodes::_n14, &Graph::__unnamed_nodes::_n15, &Graph::__unnamed_nodes::_n16, &Graph::CAP_3_Y, &Graph::__unnamed_nodes::_n18, &Graph::__unnamed_nodes::_n19, &Graph::__unnamed_nodes::_n20, &Graph::__unnamed_nodes::_n21, &Graph::BASE_1_Y, &Graph::__unnamed_nodes::_n23, &Graph::__unnamed_nodes::_n24, &Graph::BASE_2_Y, &Graph::__unnamed_nodes::_n26, &Graph::__unnamed_nodes::_n27, &Graph::CAP_1_Y, &Graph::PUSH_BASE_1_Y, &Graph::PUSH_BASE_2_Y, &Graph::PUSH_BASE_3_B, &Graph::BASE_3_B, &Graph::__unnamed_nodes::_n33, &Graph::MODULE_1_B, &Graph::MODULE_2_B, &Graph::CAP_2_B, &Graph::MODULE_5_B, &Graph::MODULE_4_B, &Graph::__DISP_1_B, &Graph::DISP_1_B, &Graph::MODULE_3_B, &Graph::CAP_5_B, &Graph::__unnamed_nodes::_n43, &Graph::__unnamed_nodes::_n44, &Graph::__unnamed_nodes::_n45, &Graph::CAP_3_B, &Graph::__unnamed_nodes::_n47, &Graph::__unnamed_nodes::_n48, &Graph::__unnamed_nodes::_n49, &Graph::__unnamed_nodes::_n50, &Graph::__unnamed_nodes::_n51, &Graph::__unnamed_nodes::_n52, &Graph::__unnamed_nodes::_n53, &Graph::BASE_1_B, &Graph::__unnamed_nodes::_n55, &Graph::BASE_2_B, &Graph::__unnamed_nodes::_n57, &Graph::__unnamed_nodes::_n58, &Graph::CAP_1_B, &Graph::PUSH_BASE_1_B, &Graph::PUSH_BASE_2_B, &Graph::BASE_3_Y, &Graph::PUSH_BASE_3_Y, &Graph::__unnamed_nodes::_n64, };
+
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n0[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n10, 316.227766017 }, { &Graph::__unnamed_nodes::_n18, 476.340214553 }, { &Graph::__unnamed_nodes::_n19, 493.036509804 }, { &Graph::DISP_1_Y, 317.647603485 }, { &Graph::__unnamed_nodes::_n24, 583.095189485 }, { &Graph::CAP_1_Y, 260.0 }, { &Graph::__unnamed_nodes::_n33, 230.512472548 }, { &Graph::__unnamed_nodes::_n9, 316.227766017 } };
+ }
+ }
+/* #0 */ GraphNodeWithSymmetric Graph::MODULE_1_Y(1000, 600, "MODULE_1_Y", &Graph::MODULE_1_B, Graph::__adj_lists::_n0, 8);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n1[] __attribute__((far)) = { { &Graph::CAP_3_Y, 220.0 } };
+ }
+ }
+/* #1 */ GraphNodeWithSymmetric Graph::MODULE_3_Y(500, 1100, "MODULE_3_Y", &Graph::MODULE_3_B, Graph::__adj_lists::_n1, 1);
+/* #2 */ GraphNodeWithSymmetric Graph::MODULE_5_Y(800, 1850, "MODULE_5_Y", &Graph::MODULE_5_B, NULL, 0);
+/* #3 */ GraphNodeWithSymmetric Graph::MODULE_2_Y(200, 600, "MODULE_2_Y", &Graph::MODULE_2_B, NULL, 0);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n4[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n16, 170.880074906 }, { &Graph::CAP_3_Y, 211.896201004 }, { &Graph::__unnamed_nodes::_n21, 177.002824836 }, { &Graph::BASE_1_Y, 72.1110255093 } };
+ }
+ }
+/* #4 */ GraphNodeWithSymmetric Graph::CAP_2_Y(300, 810, "CAP_2_Y", &Graph::CAP_2_B, Graph::__adj_lists::_n4, 4);
+/* #5 */ GraphNodeWithSymmetric Graph::MODULE_4_Y(900, 1400, "MODULE_4_Y", &Graph::MODULE_4_B, NULL, 0);
+/* #6 */ GraphNodeWithSymmetric Graph::__DISP_1_Y(1150, 170, "__DISP_1_Y", &Graph::__DISP_1_B, NULL, 0);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n7[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n24, 350.570962859 }, { &Graph::MODULE_1_Y, 317.647603485 }, { &Graph::__unnamed_nodes::_n19, 439.004555785 }, { &Graph::CAP_1_Y, 151.327459504 } };
+ }
+ }
+/* #7 */ GraphNodeWithSymmetric Graph::DISP_1_Y(1150, 320, "DISP_1_Y", &Graph::DISP_1_B, Graph::__adj_lists::_n7, 4);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n8[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n11, 454.120028186 }, { &Graph::__unnamed_nodes::_n12, 331.903600463 }, { &Graph::__unnamed_nodes::_n15, 523.47397261 } };
+ }
+ }
+/* #8 */ GraphNodeWithSymmetric Graph::CAP_5_Y(650, 1630, "CAP_5_Y", &Graph::CAP_5_B, Graph::__adj_lists::_n8, 3);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n9[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n10, 200.0 }, { &Graph::__unnamed_nodes::_n11, 334.790979568 }, { &Graph::__unnamed_nodes::_n13, 237.775103827 }, { &Graph::__unnamed_nodes::_n20, 616.11687203 }, { &Graph::__unnamed_nodes::_n23, 228.063587624 }, { &Graph::__unnamed_nodes::_n27, 316.425346646 }, { &Graph::__unnamed_nodes::_n33, 127.812362469 }, { &Graph::MODULE_1_Y, 316.227766017 } };
+ }
+ }
+/* #9 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n9(900, 900, NULL, &Graph::__unnamed_nodes::_n43, Graph::__adj_lists::_n9, 8);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n10[] __attribute__((far)) = { { &Graph::MODULE_1_Y, 316.227766017 }, { &Graph::__unnamed_nodes::_n9, 200.0 }, { &Graph::__unnamed_nodes::_n11, 474.220412888 }, { &Graph::__unnamed_nodes::_n18, 270.0 }, { &Graph::__unnamed_nodes::_n19, 498.081318662 }, { &Graph::__unnamed_nodes::_n20, 423.792402008 }, { &Graph::__unnamed_nodes::_n27, 305.491407408 }, { &Graph::__unnamed_nodes::_n26, 273.75353879 }, { &Graph::BASE_2_Y, 493.279839442 }, { &Graph::__unnamed_nodes::_n33, 271.91175039 } };
+ }
+ }
+/* #10 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n10(1100, 900, NULL, &Graph::__unnamed_nodes::_n44, Graph::__adj_lists::_n10, 10);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n11[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n9, 334.790979568 }, { &Graph::__unnamed_nodes::_n10, 474.220412888 }, { &Graph::CAP_5_Y, 454.120028186 }, { &Graph::__unnamed_nodes::_n12, 345.637092917 }, { &Graph::__unnamed_nodes::_n13, 222.031529293 }, { &Graph::__unnamed_nodes::_n18, 709.975351685 }, { &Graph::__unnamed_nodes::_n27, 299.282475264 } };
+ }
+ }
+/* #11 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n11(718, 1181, NULL, &Graph::__unnamed_nodes::_n45, Graph::__adj_lists::_n11, 7);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n12[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n11, 345.637092917 }, { &Graph::CAP_5_Y, 331.903600463 }, { &Graph::__unnamed_nodes::_n15, 215.148785727 }, { &Graph::__unnamed_nodes::_n14, 307.050484448 } };
+ }
+ }
+/* #12 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n12(434, 1378, NULL, &Graph::CAP_3_B, Graph::__adj_lists::_n12, 4);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n13[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n9, 237.775103827 }, { &Graph::__unnamed_nodes::_n11, 222.031529293 }, { &Graph::CAP_3_Y, 190.517715712 }, { &Graph::__unnamed_nodes::_n21, 304.947536471 }, { &Graph::__unnamed_nodes::_n23, 131.461020839 } };
+ }
+ }
+/* #13 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n13(671, 964, NULL, &Graph::__unnamed_nodes::_n47, Graph::__adj_lists::_n13, 5);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n14[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n15, 183.534737856 }, { &Graph::__unnamed_nodes::_n12, 307.050484448 }, { &Graph::__unnamed_nodes::_n16, 170.0 }, { &Graph::CAP_3_Y, 367.695526217 } };
+ }
+ }
+/* #14 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n14(240, 1140, NULL, &Graph::__unnamed_nodes::_n49, Graph::__adj_lists::_n14, 4);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n15[] __attribute__((far)) = { { &Graph::CAP_5_Y, 523.47397261 }, { &Graph::__unnamed_nodes::_n12, 215.148785727 }, { &Graph::__unnamed_nodes::_n14, 183.534737856 } };
+ }
+ }
+/* #15 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n15(226, 1323, NULL, &Graph::__unnamed_nodes::_n48, Graph::__adj_lists::_n15, 3);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n16[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n14, 170.0 }, { &Graph::CAP_2_Y, 170.880074906 }, { &Graph::CAP_3_Y, 275.136329844 }, { &Graph::BASE_1_Y, 200.0 } };
+ }
+ }
+/* #16 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n16(240, 970, NULL, &Graph::__unnamed_nodes::_n50, Graph::__adj_lists::_n16, 4);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n17[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n13, 190.517715712 }, { &Graph::CAP_2_Y, 211.896201004 }, { &Graph::__unnamed_nodes::_n16, 275.136329844 }, { &Graph::__unnamed_nodes::_n14, 367.695526217 }, { &Graph::__unnamed_nodes::_n21, 143.840189099 }, { &Graph::MODULE_3_Y, 220.0 }, { &Graph::__unnamed_nodes::_n23, 187.970742404 } };
+ }
+ }
+/* #17 */ GraphNodeWithSymmetric Graph::CAP_3_Y(500, 880, "CAP_3_Y", &Graph::__unnamed_nodes::_n51, Graph::__adj_lists::_n17, 7);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n18[] __attribute__((far)) = { { &Graph::MODULE_1_Y, 476.340214553 }, { &Graph::__unnamed_nodes::_n10, 270.0 }, { &Graph::__unnamed_nodes::_n11, 709.975351685 }, { &Graph::__unnamed_nodes::_n19, 329.795391114 }, { &Graph::__unnamed_nodes::_n52, 260.0 }, { &Graph::__unnamed_nodes::_n20, 191.049731745 }, { &Graph::__unnamed_nodes::_n26, 258.536264381 } };
+ }
+ }
+/* #18 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n18(1370, 900, NULL, &Graph::__unnamed_nodes::_n52, Graph::__adj_lists::_n18, 7);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n19[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n18, 329.795391114 }, { &Graph::__unnamed_nodes::_n52, 335.268549077 }, { &Graph::MODULE_1_Y, 493.036509804 }, { &Graph::MODULE_1_B, 507.035501716 }, { &Graph::__unnamed_nodes::_n10, 498.081318662 }, { &Graph::__unnamed_nodes::_n44, 509.200353496 }, { &Graph::DISP_1_Y, 439.004555785 }, { &Graph::__unnamed_nodes::_n24, 294.083321526 }, { &Graph::DISP_1_B, 450.02777692 } };
+ }
+ }
+/* #19 */ GraphNode Graph::__unnamed_nodes::_n19(1493, 594, NULL, Graph::__adj_lists::_n19, 9);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n20[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n18, 191.049731745 }, { &Graph::__unnamed_nodes::_n52, 191.049731745 }, { &Graph::__unnamed_nodes::_n10, 423.792402008 }, { &Graph::__unnamed_nodes::_n44, 423.792402008 }, { &Graph::__unnamed_nodes::_n43, 616.11687203 }, { &Graph::__unnamed_nodes::_n9, 616.11687203 }, { &Graph::__unnamed_nodes::_n26, 265.369553642 }, { &Graph::__unnamed_nodes::_n57, 265.369553642 } };
+ }
+ }
+/* #20 */ GraphNode Graph::__unnamed_nodes::_n20(1500, 1040, NULL, Graph::__adj_lists::_n20, 8);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n21[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n13, 304.947536471 }, { &Graph::CAP_2_Y, 177.002824836 }, { &Graph::CAP_3_Y, 143.840189099 }, { &Graph::BASE_1_Y, 224.877744564 }, { &Graph::__unnamed_nodes::_n23, 237.539470404 } };
+ }
+ }
+/* #21 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n21(463, 741, NULL, &Graph::__unnamed_nodes::_n53, Graph::__adj_lists::_n21, 5);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n22[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n21, 224.877744564 }, { &Graph::CAP_2_Y, 72.1110255093 }, { &Graph::__unnamed_nodes::_n16, 200.0 } };
+ }
+ }
+/* #22 */ GraphNodeWithSymmetric Graph::BASE_1_Y(240, 770, "BASE_1_Y", &Graph::BASE_1_B, Graph::__adj_lists::_n22, 3);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n23[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n21, 237.539470404 }, { &Graph::__unnamed_nodes::_n13, 131.461020839 }, { &Graph::__unnamed_nodes::_n9, 228.063587624 }, { &Graph::CAP_3_Y, 187.970742404 }, { &Graph::__unnamed_nodes::_n33, 181.892825587 } };
+ }
+ }
+/* #23 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n23(682, 833, NULL, &Graph::__unnamed_nodes::_n55, Graph::__adj_lists::_n23, 5);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n24[] __attribute__((far)) = { { &Graph::DISP_1_Y, 350.570962859 }, { &Graph::DISP_1_B, 350.570962859 }, { &Graph::__unnamed_nodes::_n19, 294.083321526 }, { &Graph::MODULE_1_Y, 583.095189485 }, { &Graph::MODULE_1_B, 583.095189485 } };
+ }
+ }
+/* #24 */ GraphNode Graph::__unnamed_nodes::_n24(1500, 300, NULL, Graph::__adj_lists::_n24, 5);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n25[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n27, 257.701377567 }, { &Graph::__unnamed_nodes::_n26, 262.937254873 }, { &Graph::__unnamed_nodes::_n10, 493.279839442 } };
+ }
+ }
+/* #25 */ GraphNodeWithSymmetric Graph::BASE_2_Y(1190, 1385, "BASE_2_Y", &Graph::BASE_2_B, Graph::__adj_lists::_n25, 3);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n26[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n20, 265.369553642 }, { &Graph::__unnamed_nodes::_n27, 241.896672156 }, { &Graph::__unnamed_nodes::_n10, 273.75353879 }, { &Graph::__unnamed_nodes::_n18, 258.536264381 }, { &Graph::BASE_2_Y, 262.937254873 }, { &Graph::BASE_3_B, 141.0 } };
+ }
+ }
+/* #26 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n26(1250, 1129, NULL, &Graph::__unnamed_nodes::_n57, Graph::__adj_lists::_n26, 6);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n27[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n26, 241.896672156 }, { &Graph::__unnamed_nodes::_n11, 299.282475264 }, { &Graph::__unnamed_nodes::_n10, 305.491407408 }, { &Graph::BASE_2_Y, 257.701377567 }, { &Graph::__unnamed_nodes::_n9, 316.425346646 } };
+ }
+ }
+/* #27 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n27(1017, 1194, NULL, &Graph::__unnamed_nodes::_n58, Graph::__adj_lists::_n27, 5);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n28[] __attribute__((far)) = { { &Graph::MODULE_1_Y, 260.0 }, { &Graph::DISP_1_Y, 151.327459504 } };
+ }
+ }
+/* #28 */ GraphNodeWithSymmetric Graph::CAP_1_Y(1000, 340, "CAP_1_Y", &Graph::CAP_1_B, Graph::__adj_lists::_n28, 2);
+/* #29 */ GraphNodeWithSymmetric Graph::PUSH_BASE_1_Y(220, 770, "PUSH_BASE_1_Y", &Graph::PUSH_BASE_1_B, NULL, 0);
+/* #30 */ GraphNodeWithSymmetric Graph::PUSH_BASE_2_Y(1160, 1407, "PUSH_BASE_2_Y", &Graph::PUSH_BASE_2_B, NULL, 0);
+/* #31 */ GraphNodeWithSymmetric Graph::PUSH_BASE_3_B(1270, 1270, "PUSH_BASE_3_B", &Graph::PUSH_BASE_3_Y, NULL, 0);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n32[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n26, 141.0 } };
+ }
+ }
+/* #32 */ GraphNodeWithSymmetric Graph::BASE_3_B(1250, 1270, "BASE_3_B", &Graph::BASE_3_Y, Graph::__adj_lists::_n32, 1);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n33[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n23, 181.892825587 }, { &Graph::MODULE_1_Y, 230.512472548 }, { &Graph::__unnamed_nodes::_n9, 127.812362469 }, { &Graph::__unnamed_nodes::_n10, 271.91175039 } };
+ }
+ }
+/* #33 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n33(856, 780, NULL, &Graph::__unnamed_nodes::_n64, Graph::__adj_lists::_n33, 4);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n34[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n44, 316.227766017 }, { &Graph::__unnamed_nodes::_n52, 476.340214553 }, { &Graph::__unnamed_nodes::_n19, 507.035501716 }, { &Graph::__unnamed_nodes::_n24, 583.095189485 }, { &Graph::DISP_1_B, 317.647603485 }, { &Graph::CAP_1_B, 260.0 }, { &Graph::__unnamed_nodes::_n64, 230.512472548 }, { &Graph::__unnamed_nodes::_n43, 316.227766017 } };
+ }
+ }
+/* #34 */ GraphNodeWithSymmetric Graph::MODULE_1_B(2000, 600, "MODULE_1_B", &Graph::MODULE_1_Y, Graph::__adj_lists::_n34, 8);
+/* #35 */ GraphNodeWithSymmetric Graph::MODULE_2_B(2800, 600, "MODULE_2_B", &Graph::MODULE_2_Y, NULL, 0);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n36[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n50, 170.880074906 }, { &Graph::__unnamed_nodes::_n51, 211.896201004 }, { &Graph::__unnamed_nodes::_n53, 177.002824836 }, { &Graph::BASE_1_B, 72.1110255093 } };
+ }
+ }
+/* #36 */ GraphNodeWithSymmetric Graph::CAP_2_B(2700, 810, "CAP_2_B", &Graph::CAP_2_Y, Graph::__adj_lists::_n36, 4);
+/* #37 */ GraphNodeWithSymmetric Graph::MODULE_5_B(2200, 1850, "MODULE_5_B", &Graph::MODULE_5_Y, NULL, 0);
+/* #38 */ GraphNodeWithSymmetric Graph::MODULE_4_B(2100, 1400, "MODULE_4_B", &Graph::MODULE_4_Y, NULL, 0);
+/* #39 */ GraphNodeWithSymmetric Graph::__DISP_1_B(1850, 170, "__DISP_1_B", &Graph::__DISP_1_Y, NULL, 0);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n40[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n24, 350.570962859 }, { &Graph::MODULE_1_B, 317.647603485 }, { &Graph::__unnamed_nodes::_n19, 450.02777692 }, { &Graph::CAP_1_B, 151.327459504 } };
+ }
+ }
+/* #40 */ GraphNodeWithSymmetric Graph::DISP_1_B(1850, 320, "DISP_1_B", &Graph::DISP_1_Y, Graph::__adj_lists::_n40, 4);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n41[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n51, 220.0 } };
+ }
+ }
+/* #41 */ GraphNodeWithSymmetric Graph::MODULE_3_B(2500, 1100, "MODULE_3_B", &Graph::MODULE_3_Y, Graph::__adj_lists::_n41, 1);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n42[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n45, 454.120028186 }, { &Graph::CAP_3_B, 331.903600463 }, { &Graph::__unnamed_nodes::_n48, 523.47397261 } };
+ }
+ }
+/* #42 */ GraphNodeWithSymmetric Graph::CAP_5_B(2350, 1630, "CAP_5_B", &Graph::CAP_5_Y, Graph::__adj_lists::_n42, 3);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n43[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n44, 200.0 }, { &Graph::__unnamed_nodes::_n45, 334.790979568 }, { &Graph::__unnamed_nodes::_n47, 237.775103827 }, { &Graph::__unnamed_nodes::_n20, 616.11687203 }, { &Graph::__unnamed_nodes::_n55, 228.063587624 }, { &Graph::__unnamed_nodes::_n58, 316.425346646 }, { &Graph::__unnamed_nodes::_n64, 127.812362469 }, { &Graph::MODULE_1_B, 316.227766017 } };
+ }
+ }
+/* #43 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n43(2100, 900, NULL, &Graph::__unnamed_nodes::_n9, Graph::__adj_lists::_n43, 8);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n44[] __attribute__((far)) = { { &Graph::MODULE_1_B, 316.227766017 }, { &Graph::__unnamed_nodes::_n43, 200.0 }, { &Graph::__unnamed_nodes::_n45, 474.220412888 }, { &Graph::__unnamed_nodes::_n52, 270.0 }, { &Graph::__unnamed_nodes::_n19, 509.200353496 }, { &Graph::__unnamed_nodes::_n20, 423.792402008 }, { &Graph::__unnamed_nodes::_n57, 273.75353879 }, { &Graph::__unnamed_nodes::_n58, 305.491407408 }, { &Graph::BASE_2_B, 493.279839442 }, { &Graph::__unnamed_nodes::_n64, 271.91175039 } };
+ }
+ }
+/* #44 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n44(1900, 900, NULL, &Graph::__unnamed_nodes::_n10, Graph::__adj_lists::_n44, 10);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n45[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n44, 474.220412888 }, { &Graph::__unnamed_nodes::_n43, 334.790979568 }, { &Graph::__unnamed_nodes::_n47, 222.031529293 }, { &Graph::CAP_5_B, 454.120028186 }, { &Graph::CAP_3_B, 345.637092917 }, { &Graph::__unnamed_nodes::_n52, 709.975351685 }, { &Graph::__unnamed_nodes::_n58, 299.282475264 } };
+ }
+ }
+/* #45 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n45(2282, 1181, NULL, &Graph::__unnamed_nodes::_n11, Graph::__adj_lists::_n45, 7);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n46[] __attribute__((far)) = { { &Graph::CAP_5_B, 331.903600463 }, { &Graph::__unnamed_nodes::_n45, 345.637092917 }, { &Graph::__unnamed_nodes::_n48, 215.148785727 }, { &Graph::__unnamed_nodes::_n49, 307.050484448 } };
+ }
+ }
+/* #46 */ GraphNodeWithSymmetric Graph::CAP_3_B(2566, 1378, "CAP_3_B", &Graph::__unnamed_nodes::_n12, Graph::__adj_lists::_n46, 4);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n47[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n43, 237.775103827 }, { &Graph::__unnamed_nodes::_n45, 222.031529293 }, { &Graph::__unnamed_nodes::_n51, 190.517715712 }, { &Graph::__unnamed_nodes::_n53, 304.947536471 }, { &Graph::__unnamed_nodes::_n55, 131.461020839 } };
+ }
+ }
+/* #47 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n47(2329, 964, NULL, &Graph::__unnamed_nodes::_n13, Graph::__adj_lists::_n47, 5);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n48[] __attribute__((far)) = { { &Graph::CAP_3_B, 215.148785727 }, { &Graph::CAP_5_B, 523.47397261 }, { &Graph::__unnamed_nodes::_n49, 183.534737856 } };
+ }
+ }
+/* #48 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n48(2774, 1323, NULL, &Graph::__unnamed_nodes::_n15, Graph::__adj_lists::_n48, 3);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n49[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n48, 183.534737856 }, { &Graph::CAP_3_B, 307.050484448 }, { &Graph::__unnamed_nodes::_n50, 170.0 }, { &Graph::__unnamed_nodes::_n51, 367.695526217 } };
+ }
+ }
+/* #49 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n49(2760, 1140, NULL, &Graph::__unnamed_nodes::_n14, Graph::__adj_lists::_n49, 4);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n50[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n49, 170.0 }, { &Graph::CAP_2_B, 170.880074906 }, { &Graph::__unnamed_nodes::_n51, 275.136329844 }, { &Graph::BASE_1_B, 200.0 } };
+ }
+ }
+/* #50 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n50(2760, 970, NULL, &Graph::__unnamed_nodes::_n16, Graph::__adj_lists::_n50, 4);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n51[] __attribute__((far)) = { { &Graph::CAP_2_B, 211.896201004 }, { &Graph::__unnamed_nodes::_n50, 275.136329844 }, { &Graph::__unnamed_nodes::_n47, 190.517715712 }, { &Graph::__unnamed_nodes::_n49, 367.695526217 }, { &Graph::__unnamed_nodes::_n53, 143.840189099 }, { &Graph::MODULE_3_B, 220.0 }, { &Graph::__unnamed_nodes::_n55, 187.970742404 } };
+ }
+ }
+/* #51 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n51(2500, 880, NULL, &Graph::CAP_3_Y, Graph::__adj_lists::_n51, 7);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n52[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n18, 260.0 }, { &Graph::__unnamed_nodes::_n19, 335.268549077 }, { &Graph::__unnamed_nodes::_n44, 270.0 }, { &Graph::__unnamed_nodes::_n45, 709.975351685 }, { &Graph::MODULE_1_B, 476.340214553 }, { &Graph::__unnamed_nodes::_n20, 191.049731745 }, { &Graph::__unnamed_nodes::_n57, 258.536264381 } };
+ }
+ }
+/* #52 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n52(1630, 900, NULL, &Graph::__unnamed_nodes::_n18, Graph::__adj_lists::_n52, 7);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n53[] __attribute__((far)) = { { &Graph::CAP_2_B, 177.002824836 }, { &Graph::__unnamed_nodes::_n51, 143.840189099 }, { &Graph::__unnamed_nodes::_n47, 304.947536471 }, { &Graph::BASE_1_B, 224.877744564 }, { &Graph::__unnamed_nodes::_n55, 237.539470404 } };
+ }
+ }
+/* #53 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n53(2537, 741, NULL, &Graph::__unnamed_nodes::_n21, Graph::__adj_lists::_n53, 5);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n54[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n53, 224.877744564 }, { &Graph::CAP_2_B, 72.1110255093 }, { &Graph::__unnamed_nodes::_n50, 200.0 } };
+ }
+ }
+/* #54 */ GraphNodeWithSymmetric Graph::BASE_1_B(2760, 770, "BASE_1_B", &Graph::BASE_1_Y, Graph::__adj_lists::_n54, 3);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n55[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n53, 237.539470404 }, { &Graph::__unnamed_nodes::_n47, 131.461020839 }, { &Graph::__unnamed_nodes::_n43, 228.063587624 }, { &Graph::__unnamed_nodes::_n64, 181.892825587 }, { &Graph::__unnamed_nodes::_n51, 187.970742404 } };
+ }
+ }
+/* #55 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n55(2318, 833, NULL, &Graph::__unnamed_nodes::_n23, Graph::__adj_lists::_n55, 5);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n56[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n57, 262.937254873 }, { &Graph::__unnamed_nodes::_n58, 257.701377567 }, { &Graph::__unnamed_nodes::_n44, 493.279839442 } };
+ }
+ }
+/* #56 */ GraphNodeWithSymmetric Graph::BASE_2_B(1810, 1385, "BASE_2_B", &Graph::BASE_2_Y, Graph::__adj_lists::_n56, 3);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n57[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n20, 265.369553642 }, { &Graph::__unnamed_nodes::_n58, 241.896672156 }, { &Graph::__unnamed_nodes::_n52, 258.536264381 }, { &Graph::__unnamed_nodes::_n44, 273.75353879 }, { &Graph::BASE_2_B, 262.937254873 }, { &Graph::BASE_3_Y, 141.0 } };
+ }
+ }
+/* #57 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n57(1750, 1129, NULL, &Graph::__unnamed_nodes::_n26, Graph::__adj_lists::_n57, 6);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n58[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n57, 241.896672156 }, { &Graph::__unnamed_nodes::_n45, 299.282475264 }, { &Graph::__unnamed_nodes::_n44, 305.491407408 }, { &Graph::BASE_2_B, 257.701377567 }, { &Graph::__unnamed_nodes::_n43, 316.425346646 } };
+ }
+ }
+/* #58 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n58(1983, 1194, NULL, &Graph::__unnamed_nodes::_n27, Graph::__adj_lists::_n58, 5);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n59[] __attribute__((far)) = { { &Graph::MODULE_1_B, 260.0 }, { &Graph::DISP_1_B, 151.327459504 } };
+ }
+ }
+/* #59 */ GraphNodeWithSymmetric Graph::CAP_1_B(2000, 340, "CAP_1_B", &Graph::CAP_1_Y, Graph::__adj_lists::_n59, 2);
+/* #60 */ GraphNodeWithSymmetric Graph::PUSH_BASE_1_B(2780, 770, "PUSH_BASE_1_B", &Graph::PUSH_BASE_1_Y, NULL, 0);
+/* #61 */ GraphNodeWithSymmetric Graph::PUSH_BASE_2_B(1840, 1407, "PUSH_BASE_2_B", &Graph::PUSH_BASE_2_Y, NULL, 0);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n62[] __attribute__((far)) = { { &Graph::__unnamed_nodes::_n57, 141.0 } };
+ }
+ }
+/* #62 */ GraphNodeWithSymmetric Graph::BASE_3_Y(1750, 1270, "BASE_3_Y", &Graph::BASE_3_B, Graph::__adj_lists::_n62, 1);
+/* #63 */ GraphNodeWithSymmetric Graph::PUSH_BASE_3_Y(1730, 1270, "PUSH_BASE_3_Y", &Graph::PUSH_BASE_3_B, NULL, 0);
+namespace Graph {
+namespace __adj_lists {
+static GraphNode::AdjNode _n64[] __attribute__((far)) = { { &Graph::MODULE_1_B, 230.512472548 }, { &Graph::__unnamed_nodes::_n55, 181.892825587 }, { &Graph::__unnamed_nodes::_n43, 127.812362469 }, { &Graph::__unnamed_nodes::_n44, 271.91175039 } };
+ }
+ }
+/* #64 */ GraphNodeWithSymmetric Graph::__unnamed_nodes::_n64(2144, 780, NULL, &Graph::__unnamed_nodes::_n33, Graph::__adj_lists::_n64, 4);

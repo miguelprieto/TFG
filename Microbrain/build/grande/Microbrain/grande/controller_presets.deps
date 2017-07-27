@@ -1,0 +1,16 @@
+build/grande/Microbrain/grande/controller_presets.o: \
+ ../Microbrain/grande/controller_presets.cpp \
+ ../Microbrain/grande/controller_presets.h bus_interface.h \
+ grande/defines.h shared_defines.h ../bus_objects.h geometry.h
+
+../Microbrain/grande/controller_presets.h:
+
+bus_interface.h:
+
+grande/defines.h:
+
+shared_defines.h:
+
+../bus_objects.h:
+
+geometry.h:

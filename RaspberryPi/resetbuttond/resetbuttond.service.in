@@ -1,0 +1,9 @@
+[Unit]
+Description=Reset button handler
+
+[Service]
+Type=simple
+ExecStart=@CMAKE_INSTALL_PREFIX@/sbin/resetbuttond 18 24
+
+[Install]
+WantedBy=default.target

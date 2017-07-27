@@ -1,0 +1,17 @@
+build/grande/Microbrain/adc.o: ../Microbrain/adc.cpp grande/defines.h \
+ shared_defines.h ../Microbrain/adc.h grande/gpio.h \
+ ../Microbrain/bus_interface.h ../bus_objects.h ../Microbrain/geometry.h
+
+grande/defines.h:
+
+shared_defines.h:
+
+../Microbrain/adc.h:
+
+grande/gpio.h:
+
+../Microbrain/bus_interface.h:
+
+../bus_objects.h:
+
+../Microbrain/geometry.h:

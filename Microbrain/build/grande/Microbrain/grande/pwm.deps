@@ -1,0 +1,13 @@
+build/grande/Microbrain/grande/pwm.o: ../Microbrain/grande/pwm.cpp \
+ ../Microbrain/grande/defines.h shared_defines.h \
+ ../libs/c++support/libpic30++.h console.h ../Microbrain/grande/pwm.h
+
+../Microbrain/grande/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+console.h:
+
+../Microbrain/grande/pwm.h:

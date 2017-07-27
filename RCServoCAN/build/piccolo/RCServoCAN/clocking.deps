@@ -1,0 +1,6 @@
+build/piccolo/RCServoCAN/clocking.o: ../RCServoCAN/clocking.cpp \
+ ../RCServoCAN/defines.h ../RCServoCAN/clocking.h
+
+../RCServoCAN/defines.h:
+
+../RCServoCAN/clocking.h:

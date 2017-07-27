@@ -1,0 +1,33 @@
+build/piccolo/Microbrain/routing.o: ../Microbrain/routing.cpp \
+ piccolo/defines.h shared_defines.h ../libs/c++support/libpic30++.h \
+ ../Microbrain/routing.h ../Microbrain/geometry.h \
+ build/piccolo/generated/graph_definitions.gen \
+ ../Microbrain/bus_interface.h ../bus_objects.h ../Microbrain/wait.h \
+ piccolo/gpio.h piccolo/controller_presets.h bus_interface.h \
+ build/piccolo/generated/graph_data.gen
+
+piccolo/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+../Microbrain/routing.h:
+
+../Microbrain/geometry.h:
+
+build/piccolo/generated/graph_definitions.gen:
+
+../Microbrain/bus_interface.h:
+
+../bus_objects.h:
+
+../Microbrain/wait.h:
+
+piccolo/gpio.h:
+
+piccolo/controller_presets.h:
+
+bus_interface.h:
+
+build/piccolo/generated/graph_data.gen:

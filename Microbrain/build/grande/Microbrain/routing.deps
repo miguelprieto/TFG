@@ -1,0 +1,33 @@
+build/grande/Microbrain/routing.o: ../Microbrain/routing.cpp \
+ grande/defines.h shared_defines.h ../libs/c++support/libpic30++.h \
+ ../Microbrain/routing.h ../Microbrain/geometry.h \
+ build/grande/generated/graph_definitions.gen \
+ ../Microbrain/bus_interface.h ../bus_objects.h ../Microbrain/wait.h \
+ grande/gpio.h grande/controller_presets.h bus_interface.h \
+ build/grande/generated/graph_data.gen
+
+grande/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+../Microbrain/routing.h:
+
+../Microbrain/geometry.h:
+
+build/grande/generated/graph_definitions.gen:
+
+../Microbrain/bus_interface.h:
+
+../bus_objects.h:
+
+../Microbrain/wait.h:
+
+grande/gpio.h:
+
+grande/controller_presets.h:
+
+bus_interface.h:
+
+build/grande/generated/graph_data.gen:

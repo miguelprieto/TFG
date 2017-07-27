@@ -1,0 +1,42 @@
+build/piccolo/Microbrain/bus_interface.o: ../Microbrain/bus_interface.cpp \
+ piccolo/defines.h shared_defines.h ../libs/c++support/libpic30++.h \
+ ../Microbrain/adc.h piccolo/gpio.h ../Microbrain/bus_interface.h \
+ ../bus_objects.h ../Microbrain/geometry.h \
+ ../libs/can_stdio_and_rtsp/canstdio_endpoint.h \
+ ../libs/ecan_lib/ecan_lib.h piccolo/goals.h goal_manager.h \
+ piccolo/servos.h piccolo/servos.h ../Microbrain/routing.h \
+ build/piccolo/generated/graph_definitions.gen ../Microbrain/wait.h
+
+piccolo/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+../Microbrain/adc.h:
+
+piccolo/gpio.h:
+
+../Microbrain/bus_interface.h:
+
+../bus_objects.h:
+
+../Microbrain/geometry.h:
+
+../libs/can_stdio_and_rtsp/canstdio_endpoint.h:
+
+../libs/ecan_lib/ecan_lib.h:
+
+piccolo/goals.h:
+
+goal_manager.h:
+
+piccolo/servos.h:
+
+piccolo/servos.h:
+
+../Microbrain/routing.h:
+
+build/piccolo/generated/graph_definitions.gen:
+
+../Microbrain/wait.h:

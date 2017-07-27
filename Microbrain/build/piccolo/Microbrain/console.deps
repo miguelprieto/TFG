@@ -1,0 +1,28 @@
+build/piccolo/Microbrain/console.o: ../Microbrain/console.cpp \
+ ../Microbrain/serial.h piccolo/defines.h shared_defines.h \
+ ../libs/can_stdio_and_rtsp/canstdio_endpoint.h ../Microbrain/color.h \
+ ../Microbrain/routing.h ../Microbrain/geometry.h \
+ build/piccolo/generated/graph_definitions.gen ../Microbrain/console.h \
+ ../Microbrain/simulator_interface.h ../libs/c++support/libpic30++.h
+
+../Microbrain/serial.h:
+
+piccolo/defines.h:
+
+shared_defines.h:
+
+../libs/can_stdio_and_rtsp/canstdio_endpoint.h:
+
+../Microbrain/color.h:
+
+../Microbrain/routing.h:
+
+../Microbrain/geometry.h:
+
+build/piccolo/generated/graph_definitions.gen:
+
+../Microbrain/console.h:
+
+../Microbrain/simulator_interface.h:
+
+../libs/c++support/libpic30++.h:

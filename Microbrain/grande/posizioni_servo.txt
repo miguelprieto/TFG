@@ -1,0 +1,48 @@
+
+BAFFI
+
+SERVO 0 = BAFFO PALLE, SX
+CHIUSO = 620
+APERTO = 1270
+
+SERVO 8 = BAFFO PALLE, DX
+CHIUSO = 1110
+APERTO = 480
+
+UPDOWN
+
+SERVO - UPDOWN, SX
+GIU =
+SU =
+
+SERVO - UPDOWN, DX
+GIU =
+SU =
+
+
+-----------------------------------------
+
+SERVO 1 = PARETIA DX
+CHIUSA = 1310
+APERTA = 700
+
+SERVO 2 = PARETIA SX
+CHIUSA = 390
+APERTA = 940
+
+-------------------------------------------
+
+ASCENSORE
+
+POSIZIONE CHISURA PARETIA DX = -102
+POSIZIONE CHISURA PARETIA SX = -108
+
+POSIZIONE CARICAMENTO PALLE = -170
+
+-------------------------------------------
+
+MISURE INIZIALI
+
+Y: 182
+X: 61
+

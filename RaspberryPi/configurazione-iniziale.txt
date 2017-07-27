@@ -1,0 +1,69 @@
+Connessione tramite SSH
+  ssh root@10.42.0.XXX
+  Password iniziale: root
+
+Inizializzazione repository
+  pacman-key --init
+  pacman -Syu		# Aggiorna tutto
+  reboot		# Necessario soprattutto se si è aggiornato il kernel
+
+Pacchetti da installare
+  pacman -S adduser cmake gcc gdb gnu-netcat hostapd imagemagick make opencv svn xorg-xauth
+
+Modificare password di root e creare utente pi
+  passwd
+  adduser pi
+
+Attivazione del driver della camera - aggiungere in /boot/config.txt
+  gpu_mem=128
+  start_file=start_x.elf
+  fixup_file=fixup_x.dat
+
+  workaround per i kernel 3.12.x e 3.13.x: commentare tutti i riferimenti a "cma"
+
+Attivazione X11 over SSH - modificare /etc/ssh/sshd_config
+  Attivare AllowTcpForwarding
+  Attivare X11Forwarding
+  Impostare X11DisplayOffset 10
+  Attivare X11UseLocalhost
+
+  Eseguire
+    systemctl restart sshd
+  e riconnettersi tramite SSH
+
+Impostare l'hostname
+  hostnamectl set-hostname unictteam
+
+== Gestione del log (journald) ==
+Dimensione massima 10 MB:
+  Impostare SystemMaxUse=10M in /etc/systemd/journald.conf
+Svuotare il log:
+  rm -rf /var/log/journal/*
+Visualizzare il log relativo al boot corrente:
+  journalctl -b
+Visualizzare le 100 righe più recenti:
+  journalctl -n100
+
+== Disattivazione memorizzazione credenziali SVN ==
+Impostare "store-auth-creds = no" in .subversion/config
+
+== Disattivazione console su seriale ttyAMA0 (per XBee) ==
+Rimuovere "console=ttyAMA0,115200 kgdboc=ttyAMA0,115200" da /boot/cmdline.txt
+Disattivare shell in ascolto tramite "systemctl disable getty@ttyAMA0.service" e riavviare.
+
+== NTP all'avvio ==
+systemctl enable ntpd
+
+== Configurazione rete RasPi (eth0) ==
+IP statico su ethernet (creare un file /etc/netctl/eth0 con il seguente contenuto)
+e attivare avvio automatico con con "netctl enable eth0"
+
+Description='UniCT-Team network'
+Interface=eth0
+Connection=ethernet
+SkipNoCarrier=yes
+IP=static
+Address=('192.168.70.102/24')
+Gateway='192.168.70.1'
+DNS=('151.97.252.161')
+

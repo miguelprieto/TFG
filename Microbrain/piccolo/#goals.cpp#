@@ -1,0 +1,880 @@
+/*
+ * goals.c
+ */
+
+#include "defines.h"
+
+#include <xc.h>
+#include <stdio.h>
+#include <math.h>
+#include <libpic30++.h>
+
+#include "bus_interface.h"
+#include "color.h"
+#include "controller_presets.h"
+#include "console.h"
+#include "geometry.h"
+#include "goals.h"
+#include "goal_manager.h"
+#include "gpio.h"
+#include "routing.h"
+#include "servos.h"
+#include "wait.h"
+
+
+typedef enum {
+    YELLOW_MOONBASE,
+    LEFT_MOONBASE,
+    CENTER_MOONBASE,
+    RIGHT_MOONBASE,
+    BLUE_MOONBASE,
+} t_moon_base;
+
+
+// this class stores what modules the robot has picked
+// storing sequence: front_up, front_arm, rear_up, rear_arm
+class ModuleStatus {
+public:
+    ModuleStatus() { reset(); };
+    void mark_front_up() { front_up = true;};
+    void mark_front_mid() { front_mid = true;};
+    void mark_rear_up() { rear_up = true;};
+    void mark_rear_mid() { rear_mid = true;};
+    void reset() { front_mid = rear_mid = front_up = rear_up = false;  };
+    bool front_up, front_mid, rear_up, rear_mid;
+};
+
+static ModuleStatus module_status;
+
+
+static GoalStart goal_start("start");
+static GoalModule5 goal_module_5("module5");
+static GoalModule3 goal_module_3("module3");
+static GoalModule2 goal_module_2("module2");
+static GoalRelease1 goal_release_1("release1");
+static GoalDispenser1 goal_dispenser_1("dispenser1");
+static GoalRelease2 goal_release_2("release2");
+
+bool capture_module_from_dispenser(GraphNode * rest_point, GraphNode * capture_point,
+                                   t_side robot_side, bool up)
+{
+    int delta_x, delta_y;
+    double capture_theta;
+    bool done;
+    GraphNode * dispenser_point;
+
+    if (robot_side == REAR_SIDE) {
+        // wait if an automation is in progress at rear side
+        int s;
+        do {
+            __delay_ms(100);
+            s = automation_rear_status();
+            printf("AUTOMATION_REAR_STATUS = %d\n",s);
+        }
+        while (s == AUTOMATION_STATUS_WORKING);
+    }
+    else {
+        // wait if an automation is in progress at front side
+        int s;
+        do {
+            __delay_ms(100);
+            s = automation_front_status();
+            printf("AUTOMATION_FRONT_STATUS = %d\n",s);
+        }
+        while (s == AUTOMATION_STATUS_WORKING);
+    }
+
+    arm_prepare_dispenser(robot_side);
+    __delay_ms(1200);
+
+    distance_slow.apply();
+    // prima vai al dispenser con il braccio giu'
+    heading_to(capture_point->pos, (robot_side == FRONT_SIDE) ? HEADING_FRONT : HEADING_BACK);
+    forward_to_point(capture_point->pos);
+    __delay_ms(200); // necessario per assicurarsi che arrivino i dati dal ServoController
+    switch (wait(MotionEvent(), OmronSensorEvent(robot_side, true))) {
+    case MOTOR_LOCKED:
+        // abbiamo "forzato" sul dispenser, ma non e' scattato il sensore, che e' successo?
+        done = false;
+        break;
+    case PATH_DONE:
+        // percorso finito ma il sensore non si e' attivato, non c'e' il modulo
+        // o forse l'odometria e' andata a donnine allegre :-(
+        // Sarebbe il caso di avvicinarci??
+        done = false;
+        break;
+    case OMRON_SENSOR:
+        // ok, il sensore si e' attivato!! controlliamo l'odometria???
+        done = true;
+        break;
+    default:
+        break;
+    }
+
+    if (done) {
+        __delay_ms(400);
+    }
+    motion_stop();
+    __delay_ms(1000);
+
+ redo:
+    distance_default.apply();
+    forward_to_point(rest_point->pos);
+    WaitResult r = wait(MotionEvent());
+    // se c'e' un ostacolo riprova all'infinto, e' giusto??
+    if (r != PATH_DONE)
+        goto redo;
+
+    if (!done) {
+        distance_default.apply();
+        return false;
+    }
+
+    bool module_present = (robot_side == FRONT_SIDE) ? omron_front_status() : omron_rear_status();
+
+    if (module_present) {
+        if (up) {
+            // conserva il modulo in alto
+            sucker(robot_side, true);
+            arm_save(robot_side, true);
+        }
+        else {
+            // conserva il modulo a meta'
+            arm_save(robot_side, false);
+        }
+    }
+    else {
+        servo_reset_automation(robot_side);
+    }
+
+    distance_default.apply();
+    return true;
+}
+
+
+void capture_from_dispenser(GraphNode * rest_point, GraphNode * capture_point)
+{
+    capture_module_from_dispenser(rest_point, capture_point, FRONT_SIDE, true);
+    capture_module_from_dispenser(rest_point, capture_point, FRONT_SIDE, false);
+    capture_module_from_dispenser(rest_point, capture_point, REAR_SIDE, true);
+    capture_module_from_dispenser(rest_point, capture_point, REAR_SIDE, false);
+}
+
+
+void compute_moonbase_point(Point & p_start, Point & p_end, double motion_theta, float distance)
+{
+    p_end.x = p_start.x + distance * cos(motion_theta);
+    p_end.y = p_start.y + distance * sin(motion_theta);
+}
+
+#define MODULE_DISTANCE  105
+
+void release_into_moonbase(t_moon_base moonbase)
+{
+    double motion_theta, robot_t;
+    // compute orientation of point line
+    switch (moonbase) {
+    case YELLOW_MOONBASE: motion_theta = TO_RADIANS(90);
+    case BLUE_MOONBASE:   motion_theta = TO_RADIANS(90);
+
+    case LEFT_MOONBASE:   motion_theta = TO_RADIANS(-135);
+    case CENTER_MOONBASE: motion_theta = TO_RADIANS(90);
+    case RIGHT_MOONBASE:  motion_theta = TO_RADIANS(-45);
+    }
+
+    Point p1 = get_pos(&robot_t);
+    Point p2, p3, p4;
+
+    compute_moonbase_point(p1, p2, motion_theta, MODULE_DISTANCE);
+    compute_moonbase_point(p1, p3, motion_theta, MODULE_DISTANCE * 2);
+    compute_moonbase_point(p1, p4, motion_theta, MODULE_DISTANCE * 3);
+
+    switch (moonbase) {
+
+    case YELLOW_MOONBASE: rotate_absolute(0); bump_and_set_x(DIM_H_BACK + 108, 0); break;
+    case BLUE_MOONBASE:   rotate_absolute(180); bump_and_set_x(3000 - (DIM_H_BACK + 108), 180); break;
+
+    case LEFT_MOONBASE:   rotate_absolute(-45); /* bump */ break;
+    case CENTER_MOONBASE: rotate_absolute(symmTifBlue(180));  /* bump */ break;
+    case RIGHT_MOONBASE:  rotate_absolute(-135);   /* bump */ break;
+
+    }
+    unchecked_wait(MotionEvent());
+
+ point_1:
+    forward_to_point(p1);
+    WaitResult r = wait(MotionEvent());
+    // se c'e' un ostacolo riprova all'infinto, e' giusto??
+    if (r != PATH_DONE)
+        goto point_1;
+    // release first module
+
+    rotate_absolute(motion_theta);
+ point_2:
+    forward_to_point(p2);
+    r = wait(MotionEvent());
+    // se c'e' un ostacolo riprova all'infinto, e' giusto??
+    if (r != PATH_DONE)
+        goto point_2;
+    // release second module
+
+    rotate_absolute(motion_theta);
+ point_3:
+    forward_to_point(p3);
+    r = wait(MotionEvent());
+    // se c'e' un ostacolo riprova all'infinto, e' giusto??
+    if (r != PATH_DONE)
+  a      goto point_3;
+    // release third module
+
+    rotate_absolute(motion_theta);
+ point_4:
+    forward_to_point(p4);
+    r = wait(MotionEvent());
+    // se c'e' un ostacolo riprova all'infinto, e' giusto??
+    if (r != PATH_DONE)
+        goto point_4;
+    // release fourth module
+
+}
+
+void release_module(GraphNode * base_node, t_side side, int n_release) // n_release indica quale cilindro stiamo scaricando, per- distinguere
+                                                                       // quelli in alto da quelli in basso
+{
+    if(base_node == symmNodeifBlue(&Graph::BASE_1_Y)){
+       if(n_release==2 || n_release==4){
+         if(side == REAR_SIDE){
+           arm_change(REAR_SIDE);
+           __delay_ms(1000);
+           sucker_rear(false);
+           __delay_ms(1000);
+         } 
+         else{
+           arm_change(FRONT_SIDE);
+           __delay_ms(1000);
+           sucker_front(false);
+           __delay_ms(1000);
+         }
+       }
+
+       distance_slow.apply();
+       forward_to_point(base_node->pos);
+       rotate_absolute(symmTifBlue(0));
+       distance_default.apply();
+
+       // ********************************** START RELEASE 
+       arm_release(side);
+       // wait for release completion
+
+       do {
+           __delay_ms(300);
+       }
+       while (automation_rear_status() != AUTOMATION_STATUS_NONE);
+	}
+
+    if(base_node == symmNodeifBlue(&Graph::BASE_2_Y)){
+       if(n_release==2 || n_release==4){
+         if(side == REAR_SIDE){
+           arm_change(REAR_SIDE);
+           __delay_ms(1000);
+           sucker_rear(false);
+           __delay_ms(1000);
+         } 
+         else{
+           arm_change(FRONT_SIDE);
+           __delay_ms(1000);
+           sucker_front(false);
+           __delay_ms(1000);
+         }
+       }
+
+       distance_slow.apply();
+       forward_to_point(base_node->pos);
+
+
+       if(side == REAR_SIDE)
+          rotate_absolute(symmTifBlue(-45));
+       else
+		rotate_absolute(symmTifBlue(135));
+
+       distance_default.apply();
+
+
+       // ********************************** START RELEASE 
+       arm_release(side);
+       // wait for release completion
+       do {
+           __delay_ms(300);
+       }
+       while (automation_rear_status() != AUTOMATION_STATUS_NONE);
+       
+   }
+
+
+
+
+
+}
+
+
+
+
+
+void push_module(GraphNode * push_node, int PushRotation)
+{
+     forward_to_point(push_node->pos);
+     rotate_relative(PushRotation);
+
+}
+
+GoalStart::GoalStart(const char *name)
+    : Goal(name)
+{
+}
+
+int GoalStart::feasible()
+{
+    return 0; // Priorità massima
+}
+
+success_t GoalStart::execute()
+{
+    module_status.reset();
+
+    // Primo cilindro
+    printf("DIREZIONE CILINDRO 1");
+
+    sucker_front(true);
+    arm_capture(FRONT_SIDE, true);
+
+    //__delay_ms(1000);
+
+    GraphNode *p1 = symmNodeifBlue(&Graph::CAP_1_Y);
+
+    GraphNode *p2 = symmNodeifBlue(&Graph::MODULE_1_Y);
+
+    heading_to(p1->pos, HEADING_FRONT);
+    forward_to_point(p1->pos);
+    distance_slow.apply();
+    heading_to(p2->pos, HEADING_FRONT);
+    forward_to_distance(140);
+    unchecked_wait(MotionEvent()); // CHECK!!!
+
+    distance_default.apply();
+
+     if (automation_front_status() == AUTOMATION_STATUS_WAITING) {
+         // after the motion, we check if the capture started
+         // if the automation is still in "WAITING", there is no module to capture
+         // and we need to reset the automation itself
+         servo_reset_automation(FRONT_SIDE);
+     }
+     else
+         module_status.mark_front_up();
+
+    return DONE; // il goal start, se fallisce, non viene piu' schedulato, per tale motivo il return e' sempre DONE
+}
+
+
+
+//----------------------------------------------------------------------------
+
+GoalModule5::GoalModule5(const char *name)
+: Goal(name)
+{
+}
+
+int GoalModule5::feasible()
+{
+    if (measurePathXY(symmNodeifBlue(&Graph::CAP_5_Y)->pos) == IMPOSSIBLE)
+        return IMPOSSIBLE;
+    else
+        return 1;
+}
+
+success_t GoalModule5::execute()
+{
+
+     distance_default.apply();
+     if (doPath(symmNodeifBlue(&Graph::CAP_5_Y)) == IMPOSSIBLE) {
+         printf("\nDIREZIONE: SECONDO CILIDRO IMPOSSIBILE\n\n");
+     }
+     if (wait(MotionEvent()) != PATH_DONE) {
+         printf("\nOSTACOLO\n\n");
+         return FAIL;
+     }
+
+     // wait if an automation is in progress at front side
+     while (automation_front_status() == AUTOMATION_STATUS_WORKING) {
+         __delay_ms(100);
+     }
+     // now you can start the automation at front side
+     arm_capture(FRONT_SIDE, false);
+
+     GraphNode *point = symmNodeifBlue(&Graph::MODULE_5_Y);
+     heading_to(point->pos, HEADING_FRONT);
+     distance_slow.apply();
+     forward_to_distance(140);
+     unchecked_wait(MotionEvent());
+     distance_default.apply();
+
+     if (automation_front_status() == AUTOMATION_STATUS_WAITING) {
+         // after the motion, we check if the capture started
+         // if the automation is still in "WAITING", there is no module to capture
+         // and we need to reset the automation itself
+         servo_reset_automation(FRONT_SIDE);
+     }
+     else
+         module_status.mark_front_mid();
+
+     return DONE;
+}
+
+
+
+//----------------------------------------------------------------------------
+
+GoalModule3::GoalModule3(const char *name)
+: Goal(name)
+{
+}
+
+int GoalModule3::feasible()
+{
+    if (measurePathXY(symmNodeifBlue(&Graph::CAP_3_Y)->pos) == IMPOSSIBLE)
+        return IMPOSSIBLE;
+    else
+        return 3;
+}
+
+success_t GoalModule3::execute()
+{
+
+     distance_default.apply();
+     if (doPath(symmNodeifBlue(&Graph::CAP_3_Y), true) == IMPOSSIBLE) {
+         printf("\nDIREZIONE: TERZO CILIDRO IMPOSSIBILE\n\n");
+     }
+     if (wait(MotionEvent()) != PATH_DONE) {
+         printf("\nOSTACOLO\n\n");
+         return FAIL;
+     }
+
+     // now you can start the automation at rear side
+     if (!module_status.rear_up) {
+         sucker_rear(true);
+         arm_capture(REAR_SIDE, true);
+     }
+     else {
+         arm_capture(REAR_SIDE, false);
+     }
+
+     GraphNode *point = symmNodeifBlue(&Graph::MODULE_3_Y);
+     heading_to(point->pos, HEADING_BACK);
+     distance_slow.apply();
+     forward_to_distance(-150);
+     unchecked_wait(MotionEvent());
+     distance_default.apply();
+
+     if (automation_rear_status() == AUTOMATION_STATUS_WAITING) {
+         // after the motion, we check if the capture started
+         // if the automation is still in "WAITING", there is no module to capture
+         // and we need to reset the automation itself
+         servo_reset_automation(REAR_SIDE);
+     }
+     else {
+         if (!module_status.rear_up) {
+             module_status.mark_rear_up();
+         }
+         else {
+             module_status.mark_rear_mid();
+         }
+     }
+	
+     return DONE;
+}
+
+
+
+//----------------------------------------------------------------------------
+
+GoalModule2::GoalModule2(const char *name)
+: Goal(name)
+{
+}
+
+int GoalModule2::feasible()
+{
+    if (measurePathXY(symmNodeifBlue(&Graph::CAP_2_Y)->pos) == IMPOSSIBLE)
+        return IMPOSSIBLE;
+    else
+        return 2;
+}
+
+success_t GoalModule2::execute()
+{
+
+     distance_default.apply();
+     if (doPath(symmNodeifBlue(&Graph::CAP_2_Y), true) == IMPOSSIBLE) {
+         printf("\nDIREZIONE: QUARTO CILIDRO IMPOSSIBILE\n\n");
+     }
+     if (wait(MotionEvent()) != PATH_DONE) {
+         printf("\nOSTACOLO\n\n");
+         return FAIL;
+     }
+
+     // wait if an automation is in progress at rear side
+     while (automation_rear_status() == AUTOMATION_STATUS_WORKING) {
+         __delay_ms(100);
+     }
+     // now you can start the automation at rear side
+     if (!module_status.rear_up) {
+         sucker_rear(true);
+         arm_capture(REAR_SIDE, true);
+     }
+     else {
+         arm_capture(REAR_SIDE, false);
+     }
+     __delay_ms(500);
+
+     GraphNode *point = symmNodeifBlue(&Graph::MODULE_2_Y);
+     heading_to(point->pos, HEADING_BACK);
+     distance_slow.apply();
+     forward_to_distance(-150);
+     unchecked_wait(MotionEvent());
+     distance_default.apply();
+
+     if (automation_rear_status() == AUTOMATION_STATUS_WAITING) {
+         // after the motion, we check if the capture started
+         // if the automation is still in "WAITING", there is no module to capture
+         // and we need to reset the automation itself
+         servo_reset_automation(REAR_SIDE);
+     }
+     else {
+         if (!module_status.rear_up) {
+             module_status.mark_rear_up();
+         }
+         else {
+             module_status.mark_rear_mid();
+         }
+     }
+	
+     distance_default.apply();
+ redo:
+     forward_to_distance(150);
+     if (wait(MotionEvent()) != PATH_DONE)
+         goto redo;  // FIXME: infinite loop?
+
+     return DONE;
+}
+
+
+//----------------------------------------------------------------------------
+
+GoalRelease1::GoalRelease1(const char *name)
+: Goal(name)
+{
+}
+
+int GoalRelease1::feasible()
+{
+    if (!goal_start.isAchieved() && !goal_module_2.isAchieved() &&
+        !goal_module_3.isAchieved() && !goal_module_5.isAchieved())
+        return IMPOSSIBLE;
+    else
+        return 4;
+}
+
+
+success_t GoalRelease1::execute()
+{
+    GraphNode * base_node = symmNodeifBlue(&Graph::BASE_1_Y);  //MODIFICA TEMPORANEA PROVA SCARICO (PRIMA C'ERA BASE_1_Y)
+    GraphNode * push_node = symmNodeifBlue(&Graph::PUSH_BASE_1_Y);
+
+    distance_default.apply();
+    if (doPath(base_node, true) == IMPOSSIBLE) {
+        printf("\nDIREZIONE: BASE 1 IMPOSSIBILE\n\n");
+    }
+    if (wait(MotionEvent()) != PATH_DONE) {
+        printf("\nOSTACOLO\n\n");
+        return FAIL;
+    }
+
+    rotate_absolute(symmTifBlue(0));
+    bump_and_set_x(symmXifBlue(DIM_H_BACK + 108), symmTifBlue(0));
+    switch (wait(MotionEvent(), TimeoutEvent(4 * 4))) { // wait at most 4 seconds of timeout
+    case PATH_DONE:
+        motion_stop();
+        break;
+    case OBSTACLE:
+        motion_stop();
+        return FAIL;
+    case TIMEOUT_EXPIRED:
+        motion_stop();
+        return FAIL;
+    default:
+        motion_stop();
+        return FAIL;
+    }
+
+    // release object at rear mid
+    distance_slow.apply();
+ redo:
+    forward_to_point(base_node->pos);
+    rotate_absolute(symmTifBlue(0));
+    if (wait(MotionEvent()) != PATH_DONE)
+        goto redo; // FIXME: infinito???
+    distance_default.apply();
+
+    // ********************************** START RELEASE REAR
+    arm_release(REAR_SIDE);
+    // wait for release completion
+    do {
+        __delay_ms(300);
+    }
+    while (automation_rear_status() != AUTOMATION_STATUS_NONE);
+
+#define PUSH_ROTATION (color == YELLOW) ? -65 : 65
+    distance_slow.apply();
+    // PUSH MODULE 1
+    forward_to_point(push_node->pos);
+    rotate_relative(PUSH_ROTATION);
+    rotate_absolute(symmTifBlue(0));
+    forward_to_point(base_node->pos);
+    rotate_absolute(symmTifBlue(0));
+
+    arm_change(REAR_SIDE);
+    __delay_ms(1000);
+    sucker_rear(false);
+    __delay_ms(1000);
+
+     unchecked_wait(MotionEvent()); 
+
+     arm_release(REAR_SIDE);
+     // wait for release completion
+     do {
+         __delay_ms(300);
+     }
+     while (automation_rear_status() != AUTOMATION_STATUS_NONE);
+
+     // PUSH MODULE 2
+     distance_slow.apply();
+     forward_to_point(push_node->pos);
+     rotate_relative(PUSH_ROTATION);
+     rotate_absolute(symmTifBlue(0));
+     forward_to_point(base_node->pos);
+     rotate_absolute(symmTifBlue(0));
+     unchecked_wait(MotionEvent());
+
+
+     // operations required to close the servos
+     distance_default.apply();
+     forward_to_distance(50);
+     rotate_absolute(symmTifBlue(180));
+     forward_to_distance(50);
+     servo_reset(REAR_SIDE);
+     unchecked_wait(MotionEvent());
+
+     // ********************************** START FRONT REAR
+     arm_release(FRONT_SIDE);
+     // wait for release completion
+     do {
+         __delay_ms(300);
+     }
+     while (automation_front_status() != AUTOMATION_STATUS_NONE);
+
+     // PUSH MODULE 3
+     distance_slow.apply();
+     forward_to_point(push_node->pos);
+     rotate_relative(PUSH_ROTATION);
+     rotate_absolute(symmTifBlue(180));
+     forward_to_point(base_node->pos);
+     rotate_absolute(symmTifBlue(180));
+
+     arm_change(FRONT_SIDE);
+     __delay_ms(1000);
+     sucker_front(false);
+     __delay_ms(1000);
+
+     unchecked_wait(MotionEvent());
+
+
+     arm_release(FRONT_SIDE);
+     // wait for release completion
+     do {
+         __delay_ms(300);
+     }
+     while (automation_front_status() != AUTOMATION_STATUS_NONE);
+
+     //
+     forward_to_distance(-40);
+     unchecked_wait(MotionEvent());
+     servo_reset(FRONT_SIDE);
+
+     distance_default.apply();
+
+     module_status.reset();
+
+     return DONE;
+}
+//--------------------------------------------------------
+
+GoalDispenser1::GoalDispenser1(const char *name)
+: Goal(name)
+{
+}
+
+int GoalDispenser1::feasible()
+{
+    // attenzione!!! se il robot e' "carico" non si puo' andare al dispenser
+     return 5;
+}
+
+success_t GoalDispenser1::execute()
+{
+     int j;
+
+     GraphNode * target = symmNodeifBlue(&Graph::DISP_1_Y);
+     GraphNode * dispenser_point = symmNodeifBlue(&Graph::__DISP_1_Y);
+
+     distance_default.apply();
+     if (doPath(target) == IMPOSSIBLE) {
+         printf("\nDIREZIONE: DISPENSER IMPOSSIBILE\n\n");
+     }
+     if (wait(MotionEvent()) != PATH_DONE) {
+         printf("\nOSTACOLO\n\n");
+         return FAIL;
+     }
+
+     rotate_absolute(-90);
+     unchecked_wait(MotionEvent());
+
+     capture_from_dispenser(target, dispenser_point);
+
+     return DONE;
+}
+
+
+
+
+GoalRelease2::GoalRelease2(const char *name)
+: Goal(name)
+{
+}
+
+int GoalRelease2::feasible()
+{
+    
+    if (!goal_start.isAchieved() && !goal_module_2.isAchieved() &&
+        !goal_module_3.isAchieved() && !goal_module_5.isAchieved() && !goal_release_1.isAchieved() && !goal_dispenser_1.isAchieved()  )
+        return IMPOSSIBLE;
+    else
+        return 6;
+}
+
+
+success_t GoalRelease2::execute()
+{
+    GraphNode * base_node = symmNodeifBlue(&Graph::BASE_2_Y);
+    GraphNode * push_node = symmNodeifBlue(&Graph::PUSH_BASE_2_Y);
+
+    distance_default.apply();
+    if (doPath(base_node) == IMPOSSIBLE) {
+        printf("\nDIREZIONE: BASE 1 IMPOSSIBILE\n\n");
+    }
+    if (wait(MotionEvent()) != PATH_DONE) {
+        printf("\nOSTACOLO\n\n");
+        return FAIL;
+    }
+
+    rotate_absolute(symmTifBlue(-45));
+    bump();
+    //forward_to_point(base_node->pos);
+    rotate_absolute(symmTifBlue(-45));
+    switch (wait(MotionEvent(), TimeoutEvent(4 * 4))) { // wait at most 4 seconds of timeout
+    case PATH_DONE:
+        motion_stop();
+        break;
+    case OBSTACLE:
+        motion_stop();
+        return FAIL;
+    case TIMEOUT_EXPIRED:
+        motion_stop();
+        return FAIL;
+    default:
+        motion_stop();
+        return FAIL;
+    }
+
+
+
+#define PUSH_ROTATION (color == YELLOW) ? -65 : 65
+
+    //RELEASE&PUSH MODULE 1 REAR_SIDE
+
+    release_module(base_node, REAR_SIDE, 1);
+    push_module(push_node, PUSH_ROTATION);
+
+
+    //RELEASE&PUSH MODULE 2
+    release_module(base_node, REAR_SIDE, 2);
+    push_module(push_node, PUSH_ROTATION);
+
+/*operations required to close the servos
+     rotate_absolute(symmTifBlue(135));
+     distance_default.apply();
+     forward_to_distance(50);
+     rotate_absolute(symmTifBlue(0));
+     forward_to_distance(50);
+     servo_reset(REAR_SIDE);
+     unchecked_wait(MotionEvent());
+*/ 
+
+
+     rotate_absolute(symmTifBlue(135));
+     
+
+    //RELEASE&PUSH MODULE 3 FRONT_SIDE
+    release_module(base_node, FRONT_SIDE, 3);
+    push_module(push_node, PUSH_ROTATION);
+     
+   // __delay_ms(300);
+    //RELEASE MODULE 4
+    release_module(base_node,FRONT_SIDE, 4);
+    
+
+
+
+     forward_to_distance(-40);
+     unchecked_wait(MotionEvent());
+     servo_reset(FRONT_SIDE);
+
+     distance_default.apply();
+
+     module_status.reset();
+
+     return DONE;
+
+
+}
+
+
+void FunnyAction(void)
+{
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

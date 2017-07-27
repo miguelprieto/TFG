@@ -1,0 +1,24 @@
+build/piccolo/RCServoCAN/piccolo_automation.o: \
+ ../RCServoCAN/piccolo_automation.cpp ../RCServoCAN/defines.h \
+ ../libs/c++support/libpic30++.h ../RCServoCAN/fsm.h \
+ ../RCServoCAN/servo.h ../RCServoCAN/servo_pins.h \
+ ../RCServoCAN/automation.h ../bus_objects.h \
+ ../RCServoCAN/bus_interface.h ../libs/ecan_lib/ecan_lib.h
+
+../RCServoCAN/defines.h:
+
+../libs/c++support/libpic30++.h:
+
+../RCServoCAN/fsm.h:
+
+../RCServoCAN/servo.h:
+
+../RCServoCAN/servo_pins.h:
+
+../RCServoCAN/automation.h:
+
+../bus_objects.h:
+
+../RCServoCAN/bus_interface.h:
+
+../libs/ecan_lib/ecan_lib.h:

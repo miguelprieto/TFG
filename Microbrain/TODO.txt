@@ -1,0 +1,32 @@
+
+GRANDE
+======
+- Colpo di baffi a cilindro 2 (se non c'e'...)
+- Comunicazione tra grande e piccolo per cilindro in zona cratere 2
+- Aspettare a entrare nella zona di scarico se c'e' il piccolo da quelle
+  parti
+- Controllare tutti i "wait"
+
+- Realizzare/Trovare secondo beacon
+
+PICCOLO
+=======
+* Selettore colore
+* Starter
+* Obstacle avoidance
+* Limare spuntorni
+* Sostituire ventose
+* Aggiungere tubo di raccolta
+* Realizzare baffetti
+* Baffetti nuovi
+* Tarare vel minima rotazioni
+* "marcare" moonbase gia' riempite (NON SERVE)
+* Collegare sensori omron
+* Collegare sensori baumer
++ Abbandonare cilindri 3 e 4 in presenza di ostacolo
+- Scarico di emergenza in zona di partenza
+  (solo se il tempo e' poco e il grande e' gia' in zona
+  di scarico)
+- Comunicazione tra grande e piccolo per cilindro in zona cratere 2
+- Bump fallito su scarico 1 (testare nuovamente)
+

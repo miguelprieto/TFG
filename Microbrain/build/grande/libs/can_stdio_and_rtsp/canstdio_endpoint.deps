@@ -1,0 +1,23 @@
+build/grande/libs/can_stdio_and_rtsp/canstdio_endpoint.o: \
+ ../libs/can_stdio_and_rtsp/canstdio_endpoint.c grande/defines.h \
+ shared_defines.h ../bus_objects.h \
+ ../libs/can_stdio_and_rtsp/canrtsp_endpoint.h \
+ ../libs/can_stdio_and_rtsp/canstdio_endpoint.h \
+ ../libs/ecan_lib/ecan_lib.h simulator_interface.h \
+ ../libs/c++support/libpic30++.h
+
+grande/defines.h:
+
+shared_defines.h:
+
+../bus_objects.h:
+
+../libs/can_stdio_and_rtsp/canrtsp_endpoint.h:
+
+../libs/can_stdio_and_rtsp/canstdio_endpoint.h:
+
+../libs/ecan_lib/ecan_lib.h:
+
+simulator_interface.h:
+
+../libs/c++support/libpic30++.h:

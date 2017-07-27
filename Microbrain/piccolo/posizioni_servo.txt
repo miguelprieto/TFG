@@ -1,0 +1,42 @@
+
+BAFFO ANTERIORE DESTRO, servo n. 0
+----------------------------------
+APERTO = 1190
+PRE-CATTURA = 450
+CATTURA = 420
+
+
+BAFFO ANTERIORE SINISTRO, servo n. 1
+------------------------------------
+APERTO = 420
+PRE-CATTURA = 1160
+CATTURA = 1280
+
+
+BRACCIO ANTERIORE
+------------------
+Servo ventosa = 35
+Verticale = 512
+CCW = 830
+CW = 210
+
+Servo Gomito = 36
+Basso = 820
+Mezzo = 700
+Alto = 400
+
+
+
+BRACCIO POSTERIORE
+------------------
+Servo ventosa = 49
+Verticale = 520
+CCW = 830
+CW = 210
+
+Servo Gomito = 48
+Basso = 870
+Mezzo = 750
+Alto = 400
+
+

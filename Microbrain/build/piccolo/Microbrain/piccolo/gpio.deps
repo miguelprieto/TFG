@@ -1,0 +1,9 @@
+build/piccolo/Microbrain/piccolo/gpio.o: ../Microbrain/piccolo/gpio.cpp \
+ ../Microbrain/piccolo/defines.h shared_defines.h \
+ ../Microbrain/piccolo/gpio.h
+
+../Microbrain/piccolo/defines.h:
+
+shared_defines.h:
+
+../Microbrain/piccolo/gpio.h:

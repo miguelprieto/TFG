@@ -1,0 +1,42 @@
+<graph>
+    <nodes>
+        <node x="500" y="1100" id="0" label="MOD_YB_2"/>
+        <node x="900" y="1400" id="1" label="MOD_YB_3"/>
+        <node x="530" y="1420" id="2" label="CRATERI_Y"/>
+        <node x="600" y="1340" id="3" label="PRE_CRATERE_Y"/>
+        <node x="760" y="170" id="4" label="BASCULA_Y"/>
+        <node x="1030" y="568" id="5" label="CRATERE1_Y"/>
+        <node x="1030" y="250" id="6" label="RITORNO_Y"/>
+        <node x="1030" y="890" id="7"/>
+        <node x="780" y="1150" id="8"/>
+        <node x="1150" y="0" id="9"/>
+        <node x="835" y="170" id="10"/>
+        <node x="2500" y="1100" id="11" mirrorOf="0" label="MOD_BY_2"/>
+        <node x="2100" y="1400" id="12" mirrorOf="1" label="MOD_BY_3"/>
+        <node x="2470" y="1420" id="13" mirrorOf="2" label="CRATERI_B"/>
+        <node x="2400" y="1340" id="14" mirrorOf="3" label="PRE_CRATERE_B"/>
+        <node x="2240" y="170" id="15" mirrorOf="4" label="BASCULA_B"/>
+        <node x="1970" y="568" id="16" mirrorOf="5" label="CRATERE1_B"/>
+        <node x="1970" y="250" id="17" mirrorOf="6" label="RITORNO_B"/>
+        <node x="1970" y="890" id="18" mirrorOf="7"/>
+        <node x="2220" y="1150" id="19" mirrorOf="8"/>
+        <node x="1850" y="0" id="20" mirrorOf="9"/>
+        <node x="2165" y="170" id="21" mirrorOf="10"/>
+    </nodes>
+    <edges>
+        <edge a="3" b="2"/>
+        <edge a="14" b="13"/>
+        <edge a="5" b="7"/>
+        <edge a="16" b="18"/>
+        <edge a="5" b="6"/>
+        <edge a="16" b="17"/>
+        <edge a="3" b="8"/>
+        <edge a="8" b="7"/>
+        <edge a="14" b="19"/>
+        <edge a="19" b="18"/>
+        <edge a="4" b="10"/>
+        <edge a="10" b="6"/>
+        <edge a="15" b="21"/>
+        <edge a="21" b="17"/>
+    </edges>
+</graph>

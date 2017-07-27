@@ -1,0 +1,48 @@
+build/grande/Microbrain/grande/goals.o: ../Microbrain/grande/goals.cpp \
+ ../Microbrain/grande/defines.h shared_defines.h \
+ ../libs/c++support/libpic30++.h bus_interface.h grande/defines.h \
+ ../bus_objects.h geometry.h color.h routing.h \
+ build/grande/generated/graph_definitions.gen \
+ ../Microbrain/grande/controller_presets.h console.h geometry.h \
+ ../Microbrain/grande/goals.h goal_manager.h ../Microbrain/grande/gpio.h \
+ routing.h ../Microbrain/grande/servos.h wait.h grande/gpio.h
+
+../Microbrain/grande/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+bus_interface.h:
+
+grande/defines.h:
+
+../bus_objects.h:
+
+geometry.h:
+
+color.h:
+
+routing.h:
+
+build/grande/generated/graph_definitions.gen:
+
+../Microbrain/grande/controller_presets.h:
+
+console.h:
+
+geometry.h:
+
+../Microbrain/grande/goals.h:
+
+goal_manager.h:
+
+../Microbrain/grande/gpio.h:
+
+routing.h:
+
+../Microbrain/grande/servos.h:
+
+wait.h:
+
+grande/gpio.h:

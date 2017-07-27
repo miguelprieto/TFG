@@ -1,0 +1,8 @@
+build/piccolo/Microbrain/i2c.o: ../Microbrain/i2c.cpp piccolo/defines.h \
+ shared_defines.h ../libs/c++support/libpic30++.h
+
+piccolo/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:

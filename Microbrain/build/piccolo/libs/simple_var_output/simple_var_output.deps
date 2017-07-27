@@ -1,0 +1,10 @@
+build/piccolo/libs/simple_var_output/simple_var_output.o: \
+ ../libs/simple_var_output/simple_var_output.c \
+ ../libs/simple_var_output/simple_var_output.h ../bus_objects.h \
+ ../libs/ecan_lib/ecan_lib.h
+
+../libs/simple_var_output/simple_var_output.h:
+
+../bus_objects.h:
+
+../libs/ecan_lib/ecan_lib.h:

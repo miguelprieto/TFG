@@ -1,0 +1,57 @@
+build/grande/Microbrain/grande/menu.o: ../Microbrain/grande/menu.cpp \
+ ../Microbrain/grande/defines.h shared_defines.h \
+ ../libs/c++support/libpic30++.h adc.h grande/gpio.h bus_interface.h \
+ grande/defines.h ../bus_objects.h geometry.h color.h routing.h \
+ build/grande/generated/graph_definitions.gen console.h \
+ ../Microbrain/grande/controller_presets.h ../Microbrain/grande/goals.h \
+ goal_manager.h ../Microbrain/grande/gpio.h menu.h console.h \
+ ../Microbrain/grande/pwm.h ../Microbrain/grande/servos.h routing.h \
+ ../libs/ecan_lib/ecan_lib.h wait.h
+
+../Microbrain/grande/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+adc.h:
+
+grande/gpio.h:
+
+bus_interface.h:
+
+grande/defines.h:
+
+../bus_objects.h:
+
+geometry.h:
+
+color.h:
+
+routing.h:
+
+build/grande/generated/graph_definitions.gen:
+
+console.h:
+
+../Microbrain/grande/controller_presets.h:
+
+../Microbrain/grande/goals.h:
+
+goal_manager.h:
+
+../Microbrain/grande/gpio.h:
+
+menu.h:
+
+console.h:
+
+../Microbrain/grande/pwm.h:
+
+../Microbrain/grande/servos.h:
+
+routing.h:
+
+../libs/ecan_lib/ecan_lib.h:
+
+wait.h:

@@ -1,0 +1,37 @@
+build/grande/Microbrain/grande/servos.o: ../Microbrain/grande/servos.cpp \
+ ../Microbrain/grande/defines.h shared_defines.h \
+ ../libs/c++support/libpic30++.h bus_interface.h grande/defines.h \
+ ../bus_objects.h geometry.h ../libs/ecan_lib/ecan_lib.h \
+ ../Microbrain/grande/pwm.h wait.h grande/gpio.h \
+ ../Microbrain/grande/servos.h color.h routing.h \
+ build/grande/generated/graph_definitions.gen
+
+../Microbrain/grande/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+bus_interface.h:
+
+grande/defines.h:
+
+../bus_objects.h:
+
+geometry.h:
+
+../libs/ecan_lib/ecan_lib.h:
+
+../Microbrain/grande/pwm.h:
+
+wait.h:
+
+grande/gpio.h:
+
+../Microbrain/grande/servos.h:
+
+color.h:
+
+routing.h:
+
+build/grande/generated/graph_definitions.gen:

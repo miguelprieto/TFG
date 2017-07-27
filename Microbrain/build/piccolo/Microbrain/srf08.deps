@@ -1,0 +1,11 @@
+build/piccolo/Microbrain/srf08.o: ../Microbrain/srf08.cpp \
+ piccolo/defines.h shared_defines.h ../libs/c++support/libpic30++.h \
+ ../Microbrain/i2c.h
+
+piccolo/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+../Microbrain/i2c.h:

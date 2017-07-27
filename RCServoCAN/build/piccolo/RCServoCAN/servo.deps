@@ -1,0 +1,11 @@
+build/piccolo/RCServoCAN/servo.o: ../RCServoCAN/servo.cpp \
+ ../RCServoCAN/defines.h ../RCServoCAN/servo.h ../RCServoCAN/servo_pins.h \
+ ../RCServoCAN/led.h
+
+../RCServoCAN/defines.h:
+
+../RCServoCAN/servo.h:
+
+../RCServoCAN/servo_pins.h:
+
+../RCServoCAN/led.h:

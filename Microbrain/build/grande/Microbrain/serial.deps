@@ -1,0 +1,11 @@
+build/grande/Microbrain/serial.o: ../Microbrain/serial.cpp \
+ grande/defines.h shared_defines.h ../libs/c++support/libpic30++.h \
+ ../Microbrain/serial.h
+
+grande/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+../Microbrain/serial.h:

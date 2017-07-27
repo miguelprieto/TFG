@@ -1,0 +1,28 @@
+
+Palette spingi-stand:
+
+Left: 10
+- Riposo: 180
+- Aperta: 600
+- Chiusa: 850
+
+
+Right: 18
+- Riposo: 1000
+- Aperta: 600
+- Chiusa: 360
+
+
+Paretia:
+
+
+Left: 11
+- Riposo: 550
+- Chiusa: 715
+- Aperta: 1100
+
+Right: 19
+- Riposo: 850
+- Chiusa: 680
+- Aperta: 350
+

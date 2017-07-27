@@ -1,0 +1,30 @@
+build/piccolo/Microbrain/piccolo/servos.o: \
+ ../Microbrain/piccolo/servos.cpp ../Microbrain/piccolo/defines.h \
+ shared_defines.h ../libs/c++support/libpic30++.h bus_interface.h \
+ piccolo/defines.h ../bus_objects.h geometry.h \
+ ../libs/ecan_lib/ecan_lib.h wait.h piccolo/gpio.h \
+ ../Microbrain/piccolo/servos.h ../Microbrain/piccolo/gpio.h
+
+../Microbrain/piccolo/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+bus_interface.h:
+
+piccolo/defines.h:
+
+../bus_objects.h:
+
+geometry.h:
+
+../libs/ecan_lib/ecan_lib.h:
+
+wait.h:
+
+piccolo/gpio.h:
+
+../Microbrain/piccolo/servos.h:
+
+../Microbrain/piccolo/gpio.h:

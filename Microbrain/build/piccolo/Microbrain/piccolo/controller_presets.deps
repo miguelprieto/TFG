@@ -1,0 +1,16 @@
+build/piccolo/Microbrain/piccolo/controller_presets.o: \
+ ../Microbrain/piccolo/controller_presets.cpp \
+ ../Microbrain/piccolo/controller_presets.h bus_interface.h \
+ piccolo/defines.h shared_defines.h ../bus_objects.h geometry.h
+
+../Microbrain/piccolo/controller_presets.h:
+
+bus_interface.h:
+
+piccolo/defines.h:
+
+shared_defines.h:
+
+../bus_objects.h:
+
+geometry.h:

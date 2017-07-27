@@ -1,0 +1,49 @@
+build/piccolo/Microbrain/piccolo/goals.o: ../Microbrain/piccolo/goals.cpp \
+ ../Microbrain/piccolo/defines.h shared_defines.h \
+ ../libs/c++support/libpic30++.h bus_interface.h piccolo/defines.h \
+ ../bus_objects.h geometry.h color.h routing.h \
+ build/piccolo/generated/graph_definitions.gen \
+ ../Microbrain/piccolo/controller_presets.h console.h geometry.h \
+ ../Microbrain/piccolo/goals.h goal_manager.h \
+ ../Microbrain/piccolo/servos.h ../Microbrain/piccolo/gpio.h routing.h \
+ wait.h piccolo/gpio.h
+
+../Microbrain/piccolo/defines.h:
+
+shared_defines.h:
+
+../libs/c++support/libpic30++.h:
+
+bus_interface.h:
+
+piccolo/defines.h:
+
+../bus_objects.h:
+
+geometry.h:
+
+color.h:
+
+routing.h:
+
+build/piccolo/generated/graph_definitions.gen:
+
+../Microbrain/piccolo/controller_presets.h:
+
+console.h:
+
+geometry.h:
+
+../Microbrain/piccolo/goals.h:
+
+goal_manager.h:
+
+../Microbrain/piccolo/servos.h:
+
+../Microbrain/piccolo/gpio.h:
+
+routing.h:
+
+wait.h:
+
+piccolo/gpio.h:
